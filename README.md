@@ -16,20 +16,20 @@
 
 ## Tentang Food Choice
 
-**Food Choice** adalah platform kuliner berbasis web yang memudahkan pengguna menemukan dan menyimpan menu makanan favorit mereka. Dibangun di atas Laravel 11 dengan antarmuka yang ringan dan responsif.
+**Food Choice** FoodChoice hadir untuk membantu pengguna memilih makanan tanpa bingung (Choice Overload). Cukup dengan mengetik nama makanan seperti apa yang diinginkan atau lewat pilihan jenis makanan, sistem akan memberikan rekomendasi makanan secara otomatis dan cepat sesuai seleramu.
 
 ---
 
 ## Fitur Utama
 
-**Cari menu dengan cepat**
+**Pencarian berdasarkan text**
 Ketik nama makanan, langsung tampil rekomendasi terbaik dari seluruh pilihan yang tersedia.
 
-**Simpan menu favorit**
-Like menu yang kamu suka. Semua tersimpan di riwayat, mudah diakses kapan saja.
+**Filter preferensi pengguna**
+Pilih kategori makanan yang kamu suka.
 
-**Pilihan menu terkurasi**
-Setiap menu dikelola dan diperbarui admin agar selalu akurat, lengkap, dan menggugah selera.
+**Like makanan favorit**
+Like makanan yang kamu suka.
 
 ---
 
