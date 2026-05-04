@@ -4,10 +4,10 @@
   <p>Temukan, simpan, dan nikmati menu terbaik — semuanya dalam satu tempat.</p>
   <br/>
 
-  ![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=flat-square&logo=laravel&logoColor=white)
-  ![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat-square&logo=php&logoColor=white)
-  ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white)
-  ![License](https://img.shields.io/badge/License-MIT-orange?style=flat-square)
+  ![Laravel](https://img.shields.io/badge/Laravel-9-FF2D20?style=flat-square&logo=laravel&logoColor=white)
+  ![PHP](https://img.shields.io/badge/PHP-8.0-777BB4?style=flat-square&logo=php&logoColor=white)
+  ![MySQL](https://img.shields.io/badge/MySQL-15.1-4479A1?style=flat-square&logo=mysql&logoColor=white)
+  ![License](https://img.shields.io/badge/License-FC-orange?style=flat-square)
 
   <br/>
 </div>
@@ -47,4 +47,4 @@ Setiap menu dikelola dan diperbarui admin agar selalu akurat, lengkap, dan mengg
 
 ## Lisensi
 
-[MIT](LICENSE) © Food Choice
+[FOOD CHOICE](LICENSE) © Food Choice
