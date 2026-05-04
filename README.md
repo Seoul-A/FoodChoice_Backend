@@ -33,58 +33,15 @@ Setiap menu dikelola dan diperbarui admin agar selalu akurat, lengkap, dan mengg
 
 ---
 
-## Instalasi
-
-```bash
-# Clone repositori
-git clone https://github.com/username/food-choice.git
-cd food-choice
-
-# Install dependensi
-composer install
-npm install && npm run build
-
-# Konfigurasi environment
-cp .env.example .env
-php artisan key:generate
-```
-
-Atur koneksi database di `.env`:
-
-```env
-DB_DATABASE=food_choice
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-```bash
-# Migrasi & jalankan
-php artisan migrate --seed
-php artisan serve
-```
-
-Buka **http://localhost:8000**
-
----
-
 ## Teknologi
 
 | | |
 |---|---|
-| Backend | Laravel 11, PHP 8.2+ |
-| Database | MySQL 8.0 |
+| Backend | Laravel 9, PHP 8.0 |
+| Database | MySQL 15.1 |
 | Frontend | Blade, Tailwind CSS |
 | Auth | Laravel Sanctum |
 | API | RESTful |
-
----
-
-## Akun Default
-
-| Role | Email | Password |
-|---|---|---|
-| Admin | admin@foodchoice.com | password |
-| User | user@foodchoice.com | password |
 
 ---
 
