@@ -1,66 +1,209 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<img src="https://laravel.com/img/logomark.min.svg" width="80" alt="Laravel Logo"/>
 
-## About Laravel
+# 🍜 FoodApp — Aplikasi Pesan Makanan Online
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+[![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Platform pemesanan makanan online berbasis web & mobile yang modern, cepat, dan mudah digunakan.**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+[Demo](https://demo.yourapp.com) · [Dokumentasi](docs/) · [Laporkan Bug](issues/) · [Request Fitur](issues/)
 
-## Learning Laravel
+</div>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 📱 Tampilan Aplikasi
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+<div align="center">
 
-## Laravel Sponsors
+| Home & Pencarian | Detail Produk | Riwayat Like |
+|:---:|:---:|:---:|
+| ![Home](screenshots/home.png) | ![Detail](screenshots/detail.png) | ![Riwayat](screenshots/riwayat.png) |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+| Profil Pengguna | Halaman Login | Admin Dashboard |
+|:---:|:---:|:---:|
+| ![Profil](screenshots/profil.png) | ![Login](screenshots/login.png) | ![Admin](screenshots/admin.png) |
 
-### Premium Partners
+</div>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+---
 
-## Contributing
+## ✨ Fitur Unggulan
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- 🔍 **Pencarian Makanan** — Cari menu favorit dengan cepat dan akurat
+- ❤️ **Riwayat Like** — Simpan dan kelola menu yang kamu sukai
+- 👤 **Profil Pengguna** — Kelola akun dan preferensi pribadi
+- 🛡️ **Panel Admin** — Dashboard lengkap untuk manajemen konten & pesanan
+- 🔐 **Autentikasi Aman** — Login & register dengan validasi ketat
+- 📱 **Desain Responsif** — Tampilan optimal di semua ukuran layar
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🛠️ Teknologi yang Digunakan
 
-## Security Vulnerabilities
+| Layer | Teknologi |
+|-------|-----------|
+| **Backend** | Laravel 11, PHP 8.2+ |
+| **Database** | MySQL 8.0 |
+| **Frontend** | Blade Template, Tailwind CSS |
+| **Auth** | Laravel Sanctum / Breeze |
+| **Storage** | Laravel Storage (local/S3) |
+| **API** | RESTful API (JSON) |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🚀 Instalasi & Setup
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Prasyarat
+
+Pastikan sistem kamu sudah terinstal:
+- PHP >= 8.2
+- Composer >= 2.x
+- MySQL >= 8.0
+- Node.js >= 18.x & NPM
+
+### Langkah Instalasi
+
+**1. Clone repository**
+```bash
+git clone https://github.com/username/foodapp.git
+cd foodapp
+```
+
+**2. Install dependensi PHP**
+```bash
+composer install
+```
+
+**3. Install dependensi Node.js**
+```bash
+npm install && npm run build
+```
+
+**4. Konfigurasi environment**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+**5. Atur database di file `.env`**
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=foodapp
+DB_USERNAME=root
+DB_PASSWORD=your_password
+```
+
+**6. Migrasi & seeder database**
+```bash
+php artisan migrate --seed
+```
+
+**7. Jalankan server**
+```bash
+php artisan serve
+```
+
+Buka browser dan akses: **http://localhost:8000** 🎉
+
+---
+
+## 📂 Struktur Direktori
+
+```
+foodapp/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/        # Controller utama aplikasi
+│   │   └── Middleware/         # Middleware autentikasi & role
+│   ├── Models/                 # Eloquent models
+│   └── Services/               # Business logic layer
+├── database/
+│   ├── migrations/             # Skema database
+│   └── seeders/                # Data awal (dummy)
+├── resources/
+│   ├── views/                  # Blade templates
+│   │   ├── auth/               # Login, Register
+│   │   ├── admin/              # Panel admin
+│   │   └── user/               # Halaman pengguna
+│   └── js/ & css/              # Assets frontend
+├── routes/
+│   ├── web.php                 # Route web
+│   └── api.php                 # Route API
+└── public/                     # Entry point publik
+```
+
+---
+
+## 🔑 Akun Default (Setelah Seeder)
+
+| Role | Email | Password |
+|------|-------|----------|
+| **Admin** | admin@foodapp.com | password |
+| **User** | user@foodapp.com | password |
+
+> ⚠️ Ganti password default setelah login pertama kali!
+
+---
+
+## 📡 API Endpoints
+
+```
+GET    /api/foods              → Daftar semua makanan
+GET    /api/foods/{id}         → Detail makanan
+GET    /api/foods/search?q=    → Pencarian makanan
+POST   /api/auth/login         → Login pengguna
+POST   /api/auth/register      → Registrasi pengguna
+GET    /api/user/likes         → Riwayat like pengguna
+POST   /api/user/likes/{id}    → Toggle like makanan
+GET    /api/admin/foods        → [Admin] Kelola makanan
+```
+
+---
+
+## 🧪 Testing
+
+```bash
+# Jalankan semua test
+php artisan test
+
+# Test dengan coverage
+php artisan test --coverage
+```
+
+---
+
+## 🤝 Kontribusi
+
+Kontribusi sangat disambut! Silakan ikuti langkah berikut:
+
+1. **Fork** repository ini
+2. Buat branch fitur baru: `git checkout -b feature/nama-fitur`
+3. Commit perubahan: `git commit -m 'feat: tambah fitur baru'`
+4. Push ke branch: `git push origin feature/nama-fitur`
+5. Buka **Pull Request**
+
+Baca [CONTRIBUTING.md](CONTRIBUTING.md) untuk panduan lebih lengkap.
+
+---
+
+## 📄 Lisensi
+
+Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+
+---
+
+<div align="center">
+
+Dibuat dengan ❤️ menggunakan [Laravel](https://laravel.com)
+
+⭐ Jangan lupa beri bintang jika proyek ini membantu kamu!
+
+</div>
