@@ -111,14 +111,10 @@
     .result-title{
         font-size:28px;
         font-weight:bold;
-        margin-top:40px;
+        margin-top:60px;
         margin-bottom: 30px;
     }
 
-    .result-subtitle{
-        color:gray;
-        margin-bottom:20px;
-    }
 
     .grid{
         display:grid;
@@ -158,12 +154,9 @@
         margin-right:5px;
         margin-bottom:5px;
         font-weight:500;
+        box-shadow:0 3px 8px rgba(0,0,0,0.08);
     }
 
-    .tag:hover{
-        transform:scale(1.08) translateY(-2px);
-        box-shadow:0 6px 15px rgba(0,0,0,0.15);
-    }
     /* TIPE */
 
     .tag-tipe{
@@ -346,7 +339,7 @@
         Sapi
     </button>
 
-    <button class="btn active" onclick="toggle(this,'bahan')">
+    <button class="btn" onclick="toggle(this,'bahan')">
         Sayur
     </button>
 
@@ -489,38 +482,41 @@ function searchFood(){
 
     if(filtered.length === 0){
 
-        html = `
+    html = `
+
+    <div style="
+        background:white;
+        padding:18px;
+        border-radius:15px;
+        margin-bottom:18px;
+        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+
+
+        grid-column:1 / -1;
+        text-align:center;
+    ">
 
         <div style="
-            width:100%;
-            grid-column:1 / -1;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            padding:60px 20px;
-            color:gray;
+            font-size:20px;
+            font-weight:bold;
+            margin-bottom:8px;
+            color:#333;
+            margin-top:10px;
         ">
-
-            <div style="
-                font-size:20px;
-                font-weight:bold;
-                margin-bottom:8px;
-                color:#333;
-            ">
-                Makanan Tidak Ditemukan
-            </div>
-
-            <div style="
-                font-size:14px;
-            ">
-                Coba ubah preferensi makanan kamu
-            </div>
-
+            Makanan Tidak Ditemukan
         </div>
 
-        `;
+        <div style="
+            font-size:14px;
+            color:gray;
+            margin-bottom:10px;
+        ">
+            Coba ubah preferensi makanan kamu
+        </div>
+
+    </div>
+
+    `;
 
     } else {
 
