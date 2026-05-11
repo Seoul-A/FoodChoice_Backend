@@ -29,13 +29,13 @@
 
 </head>
 
-<body class="bg-[#f7f7f7] min-h-screen flex items-center justify-center p-6">
+<body class="bg-[#f7f7f7] h-screen flex items-center justify-center p-4 overflow-hidden">
 
-    <div class="w-full max-w-6xl bg-white rounded-[32px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.06)] grid lg:grid-cols-2">
+    <div class="w-full max-w-4xl bg-white rounded-[28px] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.06)] grid lg:grid-cols-2">
 
         <!-- LEFT -->
         <div
-            class="hidden lg:flex flex-col justify-between p-12 text-white relative"
+            class="hidden lg:flex flex-col justify-center text-center text-white relative"
             style="
                 background:
                 linear-gradient(
@@ -49,24 +49,18 @@
             "
         >
 
+            <!-- CONTENT -->
             <div>
 
-                <div class="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
-
-                    <i class="fa-solid fa-utensils text-xl"></i>
-
-                </div>
-
-            </div>
-
-            <div>
-
-                <h1 class="text-5xl font-bold leading-tight">
-                    Join Food
-                    Choice
+                <h1
+                    class="text-4xl font-semibold leading-tight tracking-tight"
+                >
+                    Food Choice
                 </h1>
 
-                <p class="mt-6 text-white/85 text-base leading-8 max-w-sm">
+                <p
+                    class="mt-2 text-white/80 text-[15px] leading-6 max-w-xs mx-auto"
+                >
                     Buat akun dan mulai eksplorasi berbagai rekomendasi
                     makanan terbaik sesuai selera Anda.
                 </p>
@@ -76,7 +70,7 @@
         </div>
 
         <!-- RIGHT -->
-        <div class="p-8 lg:p-14 flex items-center">
+        <div class="p-6 lg:p-8 flex items-center">
 
             <div class="w-full max-w-md mx-auto">
 
@@ -92,24 +86,24 @@
                 </div>
 
                 <!-- TITLE -->
-                <div class="mb-10">
+                <div class="mb-6">
 
                     <p class="text-[#b15c4a] text-sm font-semibold tracking-[2px] uppercase mb-3">
                         Buat Akun
                     </p>
 
-                    <h2 class="text-4xl font-bold text-gray-800">
+                    <h2 class="text-3xl font-bold text-gray-800">
                         Daftar Akun
                     </h2>
 
-                    <p class="text-gray-500 mt-3 leading-7">
+                    <p class="text-gray-500 mt-2 leading-6">
                         Daftarkan akun baru untuk mulai menggunakan Food Choice.
                     </p>
 
                 </div>
 
                 <!-- FORM -->
-                <form id="registerForm" class="space-y-5">
+                <form id="registerForm" class="space-y-4">
 
                     <!-- NAME -->
                     <div>
@@ -126,7 +120,7 @@
                                 type="text"
                                 id="name"
                                 placeholder="Masukkan nama lengkap"
-                                class="w-full h-14 border border-gray-200 rounded-2xl pl-12 pr-4 bg-[#fafafa] focus:outline-none focus:ring-4 focus:ring-[#b15c4a]/10 focus:border-[#b15c4a] transition"
+                                class="w-full h-12 border border-gray-200 rounded-2xl pl-12 pr-4 bg-[#fafafa] focus:outline-none focus:ring-4 focus:ring-[#b15c4a]/10 focus:border-[#b15c4a] transition"
                             >
 
                         </div>
@@ -148,7 +142,7 @@
                                 type="email"
                                 id="email"
                                 placeholder="Masukkan email"
-                                class="w-full h-14 border border-gray-200 rounded-2xl pl-12 pr-4 bg-[#fafafa] focus:outline-none focus:ring-4 focus:ring-[#b15c4a]/10 focus:border-[#b15c4a] transition"
+                                class="w-full h-12 border border-gray-200 rounded-2xl pl-12 pr-4 bg-[#fafafa] focus:outline-none focus:ring-4 focus:ring-[#b15c4a]/10 focus:border-[#b15c4a] transition"
                             >
 
                         </div>
@@ -170,7 +164,7 @@
                                 type="password"
                                 id="password"
                                 placeholder="Masukkan password"
-                                class="w-full h-14 border border-gray-200 rounded-2xl pl-12 pr-12 bg-[#fafafa] focus:outline-none focus:ring-4 focus:ring-[#b15c4a]/10 focus:border-[#b15c4a] transition"
+                                class="w-full h-12 border border-gray-200 rounded-2xl pl-12 pr-12 bg-[#fafafa] focus:outline-none focus:ring-4 focus:ring-[#b15c4a]/10 focus:border-[#b15c4a] transition"
                             >
 
                             <button
@@ -202,7 +196,7 @@
                                 type="password"
                                 id="confirmPassword"
                                 placeholder="Konfirmasi password"
-                                class="w-full h-14 border border-gray-200 rounded-2xl pl-12 pr-12 bg-[#fafafa] focus:outline-none focus:ring-4 focus:ring-[#b15c4a]/10 focus:border-[#b15c4a] transition"
+                                class="w-full h-12 border border-gray-200 rounded-2xl pl-12 pr-12 bg-[#fafafa] focus:outline-none focus:ring-4 focus:ring-[#b15c4a]/10 focus:border-[#b15c4a] transition"
                             >
 
                             <button
@@ -222,7 +216,7 @@
                     <!-- BUTTON -->
                     <button
                         type="submit"
-                        class="w-full h-14 rounded-2xl bg-[#b15c4a] hover:bg-[#9f4f3e] text-white font-semibold transition duration-300"
+                        class="w-full h-12 rounded-2xl bg-[#b15c4a] hover:bg-[#9f4f3e] text-white font-semibold transition duration-300"
                     >
                         Buat Akun
                     </button>
@@ -353,6 +347,5 @@
         });
 
     </script>
-
 </body>
 </html>

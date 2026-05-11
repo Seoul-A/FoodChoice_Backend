@@ -51,7 +51,7 @@
 
         <!-- LEFT SIDE -->
         <div
-            class="hidden lg:flex flex-col justify-between p-10 text-white relative"
+            class="hidden lg:flex flex-col justify-center text-center text-white relative"
             style="
                 background:
                 linear-gradient(
@@ -65,17 +65,6 @@
             "
         >
 
-            <!-- LOGO -->
-            <div>
-
-                <div
-                    class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center"
-                >
-                    <i class="fa-solid fa-utensils text-lg"></i>
-                </div>
-
-            </div>
-
             <!-- CONTENT -->
             <div>
 
@@ -86,54 +75,11 @@
                 </h1>
 
                 <p
-                    class="mt-5 text-white/80 text-[15px] leading-7 max-w-xs"
+                    class="mt-1 text-white/80 text-center text-[15px] leading-1 max-auto"
                 >
                     Temukan rekomendasi makanan terbaik
                     berdasarkan preferensi dan selera Anda.
                 </p>
-
-            </div>
-
-            <!-- FOOTER -->
-            <div
-                class="flex gap-8 text-sm text-white/85"
-            >
-
-                <div>
-
-                    <p class="text-lg font-semibold">
-                        10K+
-                    </p>
-
-                    <p>
-                        Foods
-                    </p>
-
-                </div>
-
-                <div>
-
-                    <p class="text-lg font-semibold">
-                        5K+
-                    </p>
-
-                    <p>
-                        Users
-                    </p>
-
-                </div>
-
-                <div>
-
-                    <p class="text-lg font-semibold">
-                        98%
-                    </p>
-
-                    <p>
-                        Satisfaction
-                    </p>
-
-                </div>
 
             </div>
 
@@ -145,18 +91,6 @@
         >
 
             <div class="w-full max-w-sm mx-auto">
-
-                <!-- MOBILE LOGO -->
-                <div class="lg:hidden flex justify-center mb-8">
-
-                    <div
-                        class="w-14 h-14 rounded-2xl bg-[#b15c4a] text-white flex items-center justify-center shadow-lg"
-                    >
-                        <i class="fa-solid fa-utensils"></i>
-                    </div>
-
-                </div>
-
                 <!-- TITLE -->
                 <div class="mb-8">
 
@@ -287,7 +221,7 @@
                             href="#"
                             class="text-[#b15c4a] font-medium hover:underline"
                         >
-                            Lupa password?
+                            Lupa kata sandi?
                         </a>
 
                     </div>
