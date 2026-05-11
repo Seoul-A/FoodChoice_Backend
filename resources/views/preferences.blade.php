@@ -15,15 +15,16 @@
         background:#f4f4f4;
     }
     .title{
-        font-size:24px;
+        font-size:28px;
         font-weight:bold;
-        margin-bottom:5px;
+        margin-top:10px;
+        margin-bottom:7px;
     }
 
     .subtitle{
-        color:gray;
-        margin-bottom:20px;
-        font-size:14px;
+        color:black;
+        margin-bottom:30px;
+        font-size:18px;
     }
 
     .box{
@@ -40,21 +41,24 @@
         gap:8px;
         font-weight:bold;
         margin-bottom:15px;
-        font-size:18px;
+        font-size:22px;
     }
 
     .btn{
-        padding:8px 16px;
+        padding:10px 16px;
         border:none;
         border-radius:20px;
         background:#e5e5e5;
         cursor:pointer;
         margin:5px;
         transition:0.2s;
+        font-size:16px;
+        font-weight:500;
     }
 
     .btn:hover{
-        transform:scale(1.05);
+        transform:scale(1.08) translateY(-2px);
+        box-shadow:0 6px 15px rgba(0,0,0,0.15);
     }
 
     .active{
@@ -64,23 +68,51 @@
 
     .search-btn{
         width:100%;
-        padding:14px;
+        padding:15px 28px;
         border:none;
-        border-radius:25px;
+        border-radius:30px;
         background:#a31212;
         color:white;
         font-size:16px;
         font-weight:bold;
         cursor:pointer;
-        margin-top:10px;
+        margin:20px auto 0;
         box-shadow:0 4px 10px rgba(0,0,0,0.2);
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:12px;
+    }
+
+    .search-btn-icon{
+        width:18px;
+        height:18px;
+        border:3px solid white;
+        border-radius:50%;
+        position:relative;
+        display:inline-block;
+        box-sizing:border-box;
+        flex-shrink:0;
+    }
+
+    .search-btn-icon::after{
+        content:'';
+        position:absolute;
+        width:10px;
+        height:3px;
+        background:white;
+        border-radius:10px;
+        transform:rotate(45deg);
+        right:-7px;
+        bottom:-3px;
     }
 
     .result-title{
-        font-size:22px;
+        font-size:28px;
         font-weight:bold;
-        margin-top:30px;
-        margin-bottom:5px;
+        margin-top:40px;
+        margin-bottom: 30px;
     }
 
     .result-subtitle{
@@ -103,7 +135,7 @@
 
     .card img{
         width:100%;
-        height:220px;
+        height:300px;
         object-fit:cover;
     }
 
@@ -112,19 +144,25 @@
     }
 
     .food-name{
-        font-size:18px;
+        font-size:22px;
         font-weight:bold;
-        margin-bottom:10px;
+        margin-bottom:20px;
+        margin-top:15px;
     }
 
     .tag{
         display:inline-block;
-        padding:5px 12px;
+        padding:10px 16px;
         border-radius:20px;
-        font-size:12px;
+        font-size:16px;
         margin-right:5px;
         margin-bottom:5px;
         font-weight:500;
+    }
+
+    .tag:hover{
+        transform:scale(1.08) translateY(-2px);
+        box-shadow:0 6px 15px rgba(0,0,0,0.15);
     }
     /* TIPE */
 
@@ -167,6 +205,49 @@
         background:none;
         font-size:20px;
         cursor:pointer;
+    }
+    .heart{
+        width:18px;
+        height:18px;
+        border:3px solid #8B0000;
+        border-top:none;
+        border-left:none;
+        transform:rotate(45deg);
+        display:inline-block;
+        position:relative;
+        margin-top:5px;
+    }
+
+    .heart::before,
+    .heart::after{
+        content:'';
+        width:18px;
+        height:18px;
+        border:3px solid #8B0000;
+        border-radius:50%;
+        position:absolute;
+        background:white;
+    }
+
+    .heart::before{
+        top:-12px;
+        left:0;
+    }
+
+    .heart::after{
+        left:-12px;
+        top:0;
+    }
+
+    /* FILLED */
+
+    .filled{
+        background:#8B0000;
+    }
+
+    .filled::before,
+    .filled::after{
+        background:#8B0000;
     }
 
 </style>
@@ -282,7 +363,7 @@
     </button>
 
     <button class="btn" onclick="toggle(this,'bahan')">
-        Lainnya
+        Lontong
     </button>
 
 </div>
@@ -290,7 +371,9 @@
 <!-- BUTTON -->
 
 <button class="search-btn" onclick="searchFood()">
-    🔍 Temukan Rekomendasi
+    <span class="search-btn-icon"></span>
+
+    Temukan Rekomendasi
 </button>
 
 <!-- RESULT -->
@@ -313,7 +396,7 @@ const foods = [
         jenis:'Kering',
         rasa:'Asin',
         bahan:'Nasi',
-        like:107
+        like:0
     },
 
     {
@@ -324,7 +407,7 @@ const foods = [
         jenis:'Bakar',
         rasa:'Manis',
         bahan:'Ayam',
-        like:95
+        like:0
     },
 
     {
@@ -335,7 +418,7 @@ const foods = [
         jenis:'Kuah',
         rasa:'Asin',
         bahan:'Mi',
-        like:89
+        like:0
     }
 
 ];
@@ -483,8 +566,22 @@ function searchFood(){
                         <button class="like-btn"
                         onclick="toggleLike(${food.id})">
 
-                            ${isLiked ? '❤️' : '🤍'}
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="28"
+                                height="28"
+                                viewBox="0 0 24 24"
+                                fill="${isLiked ? '#8B0000' : 'none'}"
+                                stroke="#8B0000"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round">
 
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+
+                                </path>
+
+                            </svg>
                         </button>
 
                         <span>

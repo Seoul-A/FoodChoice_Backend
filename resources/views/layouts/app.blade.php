@@ -41,9 +41,6 @@
             margin-left:20px;
         }
 
-        .search-btn-area{
-            margin-right:20px;
-        }
 
         /* BACK ICON */
 
@@ -53,7 +50,7 @@
             font-weight:300;
             line-height:1;
             font-family:Arial, sans-serif;
-            margin-top:-2px;
+            margin-top:-14px;
             margin-left:8px;
         }
 
