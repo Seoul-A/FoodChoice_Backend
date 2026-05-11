@@ -315,7 +315,8 @@
                     body: JSON.stringify({
                         name,
                         email,
-                        password
+                        password,
+                        password_confirmation: confirmPassword
                     })
 
                 });

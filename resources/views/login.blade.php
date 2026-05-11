@@ -11,6 +11,7 @@
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet"
@@ -81,8 +82,7 @@
                 <h1
                     class="text-4xl font-semibold leading-tight tracking-tight"
                 >
-                    Food
-                    Choice
+                    Food Choice
                 </h1>
 
                 <p
@@ -180,8 +180,21 @@
 
                 </div>
 
+                <!-- ERROR -->
+                @if ($errors->any())
+                    <div class="mb-4 text-sm text-red-500">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
+
                 <!-- FORM -->
-                <form id="loginForm" class="space-y-5">
+                <form
+                    method="POST"
+                    action="/login"
+                    class="space-y-5"
+                >
+
+                    @csrf
 
                     <!-- EMAIL -->
                     <div>
@@ -201,8 +214,10 @@
                             <input
                                 type="email"
                                 id="email"
+                                name="email"
                                 placeholder="Masukkan email"
                                 class="w-full h-12 border border-gray-200 rounded-xl pl-11 pr-4 bg-[#fafafa] text-[15px] focus:outline-none focus:ring-4 focus:ring-[#b15c4a]/10 focus:border-[#b15c4a] transition"
+                                required
                             >
 
                         </div>
@@ -227,8 +242,10 @@
                             <input
                                 type="password"
                                 id="password"
+                                name="password"
                                 placeholder="Masukkan password"
                                 class="w-full h-12 border border-gray-200 rounded-xl pl-11 pr-11 bg-[#fafafa] text-[15px] focus:outline-none focus:ring-4 focus:ring-[#b15c4a]/10 focus:border-[#b15c4a] transition"
+                                required
                             >
 
                             <button
@@ -284,12 +301,6 @@
                     </button>
 
                 </form>
-
-                <!-- MESSAGE -->
-                <div
-                    id="message"
-                    class="mt-5 text-center text-sm"
-                ></div>
 
                 <!-- REGISTER -->
                 <p
