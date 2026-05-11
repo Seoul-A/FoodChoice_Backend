@@ -396,7 +396,7 @@ const foods = [
         jenis:'Kering',
         rasa:'Asin',
         bahan:'Nasi',
-        like:107
+        like:0
     },
 
     {
@@ -407,7 +407,7 @@ const foods = [
         jenis:'Bakar',
         rasa:'Manis',
         bahan:'Ayam',
-        like:95
+        like:0
     },
 
     {
@@ -418,7 +418,7 @@ const foods = [
         jenis:'Kuah',
         rasa:'Asin',
         bahan:'Mi',
-        like:89
+        like:0
     }
 
 ];
