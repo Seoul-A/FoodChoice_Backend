@@ -11,6 +11,10 @@
             margin:0;
             font-family:Arial, sans-serif;
             background:#f4f4f4;
+
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
         }
 
         /* HEADER */
@@ -75,7 +79,7 @@
         /* CONTENT */
 
         .content{
-            min-height:80vh;
+            flex:1;
             padding:20px;
         }
 
