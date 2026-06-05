@@ -13,7 +13,7 @@ class Food extends Model
 
     protected $fillable = [
         'name', 'description', 'image_url',
-        'price', 'is_available', 'created_by',
+        'price', 'likes_count', 'is_available', 'created_by',
     ];
 
     protected function casts(): array
@@ -21,6 +21,7 @@ class Food extends Model
         return [
             'is_available' => 'boolean',
             'price' => 'decimal:0',
+            'likes_count' => 'integer',
         ];
     }
 

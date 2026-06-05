@@ -123,8 +123,7 @@
 
                 <!-- FORM -->
                 <form
-                    method="POST"
-                    action="/login"
+                    id="loginForm"
                     class="space-y-5"
                 >
 
@@ -258,33 +257,143 @@
 
     </div>
 
-    <script>
+<script>
 
-        function togglePassword(){
+function togglePassword(){
 
-            const password =
-                document.getElementById('password');
+    const password =
+        document.getElementById(
+            'password'
+        );
 
-            const eyeIcon =
-                document.getElementById('eyeIcon');
+    const eyeIcon =
+        document.getElementById(
+            'eyeIcon'
+        );
 
-            if(password.type === 'password'){
+    if(password.type === 'password'){
 
-                password.type = 'text';
+        password.type = 'text';
 
-                eyeIcon.classList.remove('fa-eye-slash');
-                eyeIcon.classList.add('fa-eye');
+        eyeIcon.classList.remove(
+            'fa-eye-slash'
+        );
 
-            }else{
+        eyeIcon.classList.add(
+            'fa-eye'
+        );
 
-                password.type = 'password';
+    }else{
 
-                eyeIcon.classList.remove('fa-eye');
-                eyeIcon.classList.add('fa-eye-slash');
+        password.type = 'password';
+
+        eyeIcon.classList.remove(
+            'fa-eye'
+        );
+
+        eyeIcon.classList.add(
+            'fa-eye-slash'
+        );
+    }
+}
+
+
+// LOGIN
+document
+.getElementById('loginForm')
+.addEventListener(
+'submit',
+async function(e){
+
+    e.preventDefault();
+
+    const email =
+        document.getElementById(
+            'email'
+        ).value;
+
+    const password =
+        document.getElementById(
+            'password'
+        ).value;
+
+    try{
+
+        const response =
+            await fetch(
+            '/api/login',
+            {
+                method:'POST',
+
+                headers:{
+                    'Content-Type':
+                        'application/json',
+
+                    'Accept':
+                        'application/json'
+                },
+
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
+
+        const data =
+            await response.json();
+
+        console.log(data);
+
+        if(response.ok){
+
+            // simpan token
+            localStorage.setItem(
+                'token',
+                data.token
+            );
+
+            // simpan user
+            localStorage.setItem(
+                'user',
+                JSON.stringify(
+                    data.user
+                )
+            );
+
+            // redirect dashboard
+            window.location.href =
+                '/dashboard';
+
+        }else{
+
+            // error validasi laravel
+            if(data.errors){
+
+                const error =
+                    Object.values(
+                        data.errors
+                    )[0][0];
+
+                alert(error);
+
+                return;
             }
+
+            alert(
+                data.message ??
+                'Login gagal'
+            );
         }
 
-    </script>
+    }catch(error){
 
+        console.error(error);
+
+        alert(
+            'Terjadi kesalahan server'
+        );
+    }
+});
+</script>
 </body>
 </html>
