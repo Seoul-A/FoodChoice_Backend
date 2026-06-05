@@ -37,4 +37,8 @@ Route::view(
     'admin.food-create'
 );
 
+Route::get('/profile', function () {
+    return view('profile');
+});
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
