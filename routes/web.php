@@ -44,4 +44,12 @@ Route::get('/profile', function () {
     return view('profile', compact('user'));
 });
 
+Route::get('/search', function () {
+    return view('search');
+});
+
+Route::get('/history-like', function () {
+    return view('history-like');
+});
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
