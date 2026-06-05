@@ -12,16 +12,13 @@ class Food extends Model
     protected $table = 'foods';
 
     protected $fillable = [
-        'name', 'description', 'image_url',
-        'price', 'likes_count', 'is_available', 'created_by',
+        'name', 'description', 'image_url', 'likes_count', 'is_available', 'created_by',
     ];
 
     protected function casts(): array
     {
         return [
             'is_available' => 'boolean',
-            'price' => 'decimal:0',
-            'likes_count' => 'integer',
         ];
     }
 

@@ -105,6 +105,20 @@
         </a>
 
         <a
+            href="/daftar-makanan"
+            class="
+            flex items-center
+            gap-4
+            p-4
+            rounded-2xl
+            hover:bg-gray-100
+            "
+        >
+            <i class="fa-solid fa-utensils"></i>
+            Daftar Makanan
+        </a>
+
+        <a
             href="/preferences"
             class="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-100"
         >
@@ -121,7 +135,7 @@
         </a>
 
         <a
-            href="/liked-history"
+            href="/history-like"
             class="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-100"
         >
             <i class="fa-solid fa-heart"></i>
@@ -176,10 +190,16 @@
             class="absolute left-1/2 -translate-x-1/2"
         >
 
+            <a href="/dashboard">
             <img
                 src="{{ asset('image/logo.svg') }}"
-                class="h-[55px] object-contain"
+                class="
+                h-[55px]
+                object-contain
+                cursor-pointer
+                "
             >
+        </a>
 
         </div>
 
@@ -286,6 +306,7 @@
                     text-white
                     text-[17px]
                     font-medium
+                    hover:scale-105
                     "
                 >
 
@@ -517,7 +538,7 @@
         class="
         relative
         bg-[#AF5D50]
-        rounded-t-[120px]
+        rounded-t-[300px]
         overflow-hidden
         w-full
 
@@ -526,7 +547,7 @@
         items-center
 
         pt-20
-        h-[400px]
+        h-[500px]
         md:pb-[420px]
         lg:h-[500px]
         "
@@ -538,7 +559,7 @@
             class="
             relative
             z-30
-            -mt-6
+            -mt-0
 
             bg-[#EFE247]
             hover:scale-105
@@ -657,42 +678,52 @@ function closeSidebar(){
     );
 }
 
-
 async function fetchFoods(
-    page = 1,
-    search = ''
+    page = 1
 ){
 
-    let url =
-    `/api/foods?sort=popular&page=${page}`;
+    try{
 
-    if(search){
+        const response =
+            await fetch(
+            `/api/foods?sort=popular&page=${page}`,
+        {
+            headers:{
+                'Authorization':
+                    `Bearer ${token}`,
+                'Accept':
+                    'application/json'
+            }
+        });
 
-        url +=
-        `&search=${search}`;
+        const data =
+            await response.json();
+
+        console.log(data);
+
+        renderFoods(
+            data.data.slice(0,10)
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        document
+        .getElementById(
+            'foodList'
+        )
+        .innerHTML =
+        `
+        <div class="
+            col-span-full
+            text-center
+            text-red-500
+        ">
+            Gagal memuat makanan
+        </div>
+        `;
     }
-
-    const response =
-        await fetch(url,{
-
-        headers:{
-            'Authorization':
-                `Bearer ${token}`,
-            'Accept':
-                'application/json'
-        }
-    });
-
-    const data =
-        await response.json();
-
-    renderFoods(
-        data.data
-    );
-
-    renderPagination(
-        data
-    );
 }
 
 function renderFoods(
@@ -714,12 +745,21 @@ function renderFoods(
             *12)+index+1;
 
         const tags =
-            food.tags
-            .map(tag=>`
-                <span class="bg-gray-200 text-gray-700 text-xs px-3 py-1 rounded-full">
+            (food.tags || [])
+            .map(tag => `
+                <span class="
+                    bg-[#EFEFEF]
+                    text-gray-600
+                    text-xs
+                    px-3
+                    py-1
+                    rounded-full
+                ">
                     ${tag.name}
                 </span>
-            `).join('');
+            `)
+            .join('');
+
 
         container.innerHTML += `
             <div class="food-card bg-white rounded-[28px] overflow-hidden custom-shadow">
@@ -727,7 +767,7 @@ function renderFoods(
                 <div class="relative">
 
                     <img
-                        src="${food.image_url ?? 'https://via.placeholder.com/500'}"
+                        src="${food.image_url ?? 'https://via.placeholder.com/400'}"
                         class="w-full h-[240px] object-cover"
                     >
 
@@ -818,27 +858,14 @@ function changePage(
     fetchFoods(page);
 }
 
-document
-.getElementById(
-    'searchInput'
-)
-.addEventListener(
-'keyup',
-function(){
-
-    currentPage=1;
-
-    fetchFoods(
-        1,
-        this.value
-    );
-});
-
 fetchFoods();
 
 function openSearchPopup(){
 
     document
+    .getElementById(
+        'searchPopup'
+    )
     .classList.remove(
         'hidden'
     );

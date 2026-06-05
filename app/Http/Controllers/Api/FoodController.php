@@ -25,19 +25,37 @@ class FoodController extends Controller
 
         $sort = $request->get('sort', 'popular');
         match ($sort) {
-            'populer'  => $query->popular(),
+            'popular'  => $query->popular(),
             'newest'   => $query->latest(),
             default    => $query->popular(),
         };
 
+
         $foods = $query->paginate(12);
 
         $userId = $request->user()->id;
-        $foods->getCollection()->transform(function ($food) use ($userId) {
-            $food->is_liked = $food->isLikedBy($userId);
-            return $food;
-        });
 
+        if ($foods instanceof \Illuminate\Pagination\LengthAwarePaginator) {
+
+            $foods->getCollection()
+            ->transform(function ($food) use ($userId) {
+
+                $food->is_liked =
+                    $food->isLikedBy($userId);
+
+                return $food;
+            });
+
+        } else {
+
+            $foods->transform(function ($food) use ($userId) {
+
+                $food->is_liked =
+                    $food->isLikedBy($userId);
+
+                return $food;
+            });
+        }
         return response()->json($foods);
     }
 
