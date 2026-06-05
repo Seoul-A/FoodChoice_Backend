@@ -21,8 +21,10 @@
 
     .profile-top{
         display:flex;
+        flex-direction:column;
         align-items:center;
-        gap:25px;
+        text-align:center;
+        gap:20px;
     }
 
     .profile-avatar{
@@ -43,11 +45,11 @@
     }
 
     .profile-info{
-        flex:1;
+        text-align:center;
     }
 
     .profile-name{
-        font-size:34px;
+        font-size:28px;
         font-weight:bold;
         color:#222;
         margin-bottom:8px;
@@ -70,6 +72,8 @@
         cursor:pointer;
         text-decoration:none;
         display:inline-block;
+
+        min-width:140px;
 
         box-shadow:0 4px 12px rgba(179,0,0,0.25);
 
@@ -96,22 +100,10 @@
             padding:25px;
         }
 
-        .profile-top{
-            flex-direction:column;
-            text-align:center;
-        }
-
-        .profile-name{
-            font-size:28px;
-        }
-
         .profile-email{
             font-size:15px;
         }
 
-        .logout-btn{
-            width:100%;
-        }
 
     }
 
@@ -136,11 +128,11 @@
             <div class="profile-info">
 
                 <div class="profile-name">
-                    Liviana
+                     {{ $user?->name ?? 'User' }}
                 </div>
 
                 <div class="profile-email">
-                    ✉ liviana@gmail.com
+                    ✉ {{ $user?->email ?? '-' }}
                 </div>
 
                 <a href="/login" class="logout-btn" style="text-decoration:none;">
