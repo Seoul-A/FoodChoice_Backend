@@ -20,11 +20,21 @@ Route::get('/register', function () {
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth');
+    $foods = Food::all();
+    return view('dashboard', compact('foods'));
+});
 
 Route::get('/preferences', function () {
     return view('preferences');
 });
+
+Route::get('/admin/foods/create', function () {
+    return view('admin.food-create');
+});
+
+Route::view(
+    '/admin/foods/create',
+    'admin.food-create'
+);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
