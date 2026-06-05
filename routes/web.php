@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('login');
@@ -38,7 +39,9 @@ Route::view(
 );
 
 Route::get('/profile', function () {
-    return view('profile');
+    $user = User::latest()->first();
+
+    return view('profile', compact('user'));
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
