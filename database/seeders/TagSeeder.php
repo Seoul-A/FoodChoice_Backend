@@ -12,7 +12,7 @@ class TagSeeder extends Seeder
         $tags = [
             // Tipe
             ['name' => 'Makanan berat',      'type' => 'tipe'],
-            ['name' => 'Makanan ringan',     'type' => 'tipe'],
+            ['name' => 'Camilan',     'type' => 'tipe'],
             // Jenis
             ['name' => 'Kuah',               'type' => 'jenis'],
             ['name' => 'Kering',             'type' => 'jenis'],
@@ -21,9 +21,13 @@ class TagSeeder extends Seeder
             // Rasa
             ['name' => 'Pedas',              'type' => 'rasa'],
             ['name' => 'Manis',              'type' => 'rasa'],
-            ['name' => 'Gurih',              'type' => 'rasa'],
             ['name' => 'Asin',               'type' => 'rasa'],
             // Bahan Utama
+            ['name' => 'Nasi',               'type' => 'bahan_utama'],
+            ['name' => 'Mi',               'type' => 'bahan_utama'],
+            ['name' => 'Sayur',               'type' => 'bahan_utama'],
+            ['name' => 'Ikan',               'type' => 'bahan_utama'],
+            ['name' => 'Lontong',               'type' => 'bahan_utama'],
             ['name' => 'Ayam',               'type' => 'bahan_utama'],
             ['name' => 'Seafood',            'type' => 'bahan_utama'],
             ['name' => 'Sapi',               'type' => 'bahan_utama'],
