@@ -72,16 +72,10 @@ class FoodController extends Controller
         ]);
     }
 
-    public function spinner()
+   public function spinnerFoods()
     {
         $foods = Food::available()
-            ->select(
-                'id',
-                'name',
-                'image_url',
-                'description',
-                'likes_count'
-            )
+            ->with('tags')
             ->get();
 
         return response()->json([

@@ -56,4 +56,9 @@ Route::get('/history-like', function () {
     return view('history-like');
 });
 
+Route::view(
+    '/spinner',
+    'spinner'
+);
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

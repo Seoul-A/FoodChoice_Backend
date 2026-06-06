@@ -143,6 +143,20 @@
         </a>
 
         <a
+            href="/spinner"
+            class="
+            flex items-center
+            gap-4
+            p-4
+            rounded-2xl
+            hover:bg-gray-100
+            "
+        >
+            <i class="fa-solid fa-dice"></i>
+            Spinner
+        </a>
+
+        <a
             href="/profile"
             class="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-100"
         >

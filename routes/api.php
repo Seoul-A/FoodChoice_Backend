@@ -41,6 +41,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/preferences', [PreferenceController::class, 'index']);
     Route::put('/preferences', [PreferenceController::class, 'update']);
 
+    Route::get(
+        '/spinner-foods',
+        [FoodController::class, 'spinnerFoods']);
+
     // Admin Routes
     Route::middleware('admin')->prefix('admin')->group(function () {
 
