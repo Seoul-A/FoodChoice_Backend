@@ -6,167 +6,151 @@
 
 <style>
 
-    .wheel{
-        transition:
-        transform 6s
-        cubic-bezier(
-            0.17,
-            0.67,
-            0.12,
-            0.99
-        );
-    }
+body{
+    background:#F5F5F5;
+}
 
-    .overlay-blur{
-        backdrop-filter:
-        blur(6px);
-    }
+.food-card{
+    transition:.25s;
+}
 
-    .food-card{
-        transition:
-        transform .25s ease,
-        box-shadow .25s ease;
-    }
+#wheelCanvas{
+    display:block;
+    margin:auto;
+    filter:
+    drop-shadow(
+        0 18px 35px rgba(
+            0,0,0,.14
+        )
+    );
+}
 
-    .custom-shadow{
-        box-shadow:
-        0 8px 25px rgba(
-            0,0,0,.08
-        );
-    }
+/* POPUP */
+
+#popupOverlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    backdrop-filter:blur(5px);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    padding:20px;
+}
+
+#popupOverlay.show{
+    display:flex;
+}
+
+#popupCard{
+    width:100%;
+    max-width:430px;
+    position:relative;
+}
+
+#closePopup{
+    position:absolute;
+    top:12px;
+    right:12px;
+    z-index:999;
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:999px;
+    background:white;
+    color:#9A3E35;
+    font-size:28px;
+    cursor:pointer;
+    box-shadow:
+    0 6px 18px rgba(
+        0,0,0,.12
+    );
+}
 
 </style>
 
 <section
-    class="
-    max-w-7xl
-    mx-auto
-    px-5
-    py-14
-    "
+style="
+min-height:calc(100vh - 90px);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+padding:30px 20px;
+"
 >
 
+    <!-- TITLE -->
     <div
-        class="
-        grid
-        lg:grid-cols-2
-        gap-14
-        items-center
-        "
+    style="
+    text-align:center;
+    margin-bottom:40px;
+    "
     >
 
-        <!-- LEFT -->
-        <div>
+        <h1
+        style="
+        font-size:24px;
+        font-weight:900;
+        margin:0;
+        text-transform:uppercase;
+        "
+        >
+            MASIH BINGUNG <br>
+            PILIH MAKANAN ?
+        </h1>
 
-            <p
-                class="
-                text-[#9A3E35]
-                font-semibold
-                uppercase
-                tracking-[3px]
-                "
-            >
-                Food Choice
-            </p>
+        <p
+        style="
+        color:#9A3E35;
+        font-size:15px;
+        margin-top:12px;
+        "
+        >
+            pakai spinner aja
+        </p>
 
-            <h1
-                class="
-                text-5xl
-                lg:text-6xl
-                font-extrabold
-                leading-tight
-                mt-3
-                "
-            >
-                Masih Bingung
-                Pilih
-                <span
-                    class="
-                    text-[#9A3E35]
-                    "
-                >
-                    Makanan?
-                </span>
-            </h1>
+    </div>
 
-            <p
-                class="
-                text-gray-500
-                mt-5
-                text-lg
-                "
-            >
-                Spin sekarang dan
-                biarkan Food Choice
-                memilih makanan
-                untuk kamu 😭
-            </p>
+    <!-- SPINNER -->
+    <div
+    style="
+    display:flex;
+    justify-content:center;
+    width:100%;
+    "
+    >
 
-            <button
-                onclick="spinWheel()"
-                id="spinBtn"
-                class="
-                mt-8
-                bg-[#9A3E35]
-                hover:bg-[#822f28]
-                text-white
-                px-8
-                py-4
-                rounded-full
-                font-semibold
-                shadow-xl
-                transition
-                "
-            >
-                🎲 SPIN SEKARANG
-            </button>
-
-        </div>
-
-        <!-- RIGHT -->
         <div
-            class="
-            flex
-            justify-center
-            "
+        style="
+        position:relative;
+        width:500px;
+        height:500px;
+        "
         >
 
-            <div class="relative">
+            <!-- POINTER -->
+            <div
+            style="
+            position:absolute;
+            top:50%;
+            right:-10px;
+            transform:translateY(-50%);
+            width:0;
+            height:0;
+            border-top:22px solid transparent;
+            border-bottom:22px solid transparent;
+            border-right:36px solid #9A3E35;
+            z-index:99;
+            "
+            ></div>
 
-                <!-- POINTER -->
-                <div
-                    class="
-                    absolute
-                    top-[-20px]
-                    left-1/2
-                    -translate-x-1/2
-                    z-20
-                    text-[#9A3E35]
-                    text-6xl
-                    "
-                >
-                    ▼
-                </div>
-
-                <!-- WHEEL -->
-                <div
-                    id="wheel"
-                    class="
-                    wheel
-                    w-[350px]
-                    h-[350px]
-                    md:w-[500px]
-                    md:h-[500px]
-                    rounded-full
-                    border-[10px]
-                    border-[#9A3E35]
-                    shadow-2xl
-                    relative
-                    overflow-hidden
-                    "
-                ></div>
-
-            </div>
+            <canvas
+            id="wheelCanvas"
+            width="500"
+            height="500"
+            ></canvas>
 
         </div>
 
@@ -175,47 +159,18 @@
 </section>
 
 <!-- POPUP -->
-<div
-    id="popup"
-    class="
-    fixed
-    inset-0
-    hidden
-    justify-center
-    items-center
-    bg-black/50
-    overlay-blur
-    z-[999]
-    px-5
-    "
->
+<div id="popupOverlay">
 
-    <div
-        class="
-        relative
-        max-w-[450px]
-        w-full
-        "
-    >
+    <div id="popupCard">
 
-        <!-- CLOSE -->
         <button
-            onclick="closePopup()"
-            class="
-            absolute
-            -top-14
-            right-0
-            text-white
-            text-5xl
-            z-30
-            "
+        id="closePopup"
+        onclick="closePopup()"
         >
             ×
         </button>
 
-        <div
-            id="resultCard"
-        ></div>
+        <div id="resultCard"></div>
 
     </div>
 
@@ -223,15 +178,38 @@
 
 <script>
 
+const canvas =
+    document.getElementById(
+        'wheelCanvas'
+    );
+
+const ctx =
+    canvas.getContext(
+        '2d'
+    );
+
+const wheelRadius =
+    canvas.width / 2;
+
 const token =
     localStorage.getItem(
         'token'
     );
 
 let foods = [];
+let sections = [];
 
-let currentRotation =
-    0;
+let currentAngle = 0;
+let spinSpeed = 0;
+let isSpinning = false;
+
+const colors = [
+    '#C85555',
+    '#EAA624',
+    '#767B39',
+    '#AADCF2',
+    '#F7BCB0'
+];
 
 async function loadFoods(){
 
@@ -253,183 +231,255 @@ async function loadFoods(){
     foods =
         data.foods;
 
-    renderWheel();
-}
-
-function renderWheel(){
-
-    const wheel =
-        document.getElementById(
-            'wheel'
+    sections =
+        foods.map(
+            food => food.name
         );
 
-    const angle =
-        360 /
-        foods.length;
+    drawWheel();
+}
 
-    let colors =
-        '';
+function drawWheel(){
 
-    foods.forEach(
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    const arcSize =
+        (2 * Math.PI)
+        / sections.length;
+
+    let startAngle =
+        currentAngle;
+
+    sections.forEach(
     (food,index)=>{
 
-        const colorsPalette = [
-            '#9A3E35',
-            '#C7685A',
-            '#D9A299',
-            '#8E2E25',
-            '#B95C4D'
+        const endAngle =
+            startAngle
+            + arcSize;
 
-        ];
+        // slice
+        ctx.beginPath();
 
-        const color =
-            colorsPalette[
+        ctx.moveTo(
+            wheelRadius,
+            wheelRadius
+        );
+
+        ctx.arc(
+            wheelRadius,
+            wheelRadius,
+            wheelRadius - 8,
+            startAngle,
+            endAngle
+        );
+
+        ctx.closePath();
+
+        ctx.fillStyle =
+            colors[
                 index %
-                colorsPalette.length
+                colors.length
             ];
 
-        colors +=
-        `
-        ${color}
-        ${index*angle}deg
-        ${(index+1)*angle}deg,
-        `;
-    });
+        ctx.fill();
 
-    wheel.style.background =
-        `
-        conic-gradient(
-        ${colors.slice(0,-1)}
-        ),
-        #ffffff
-        `;
+        ctx.strokeStyle =
+            '#fff';
 
-        wheel.style.border =
-        '10px solid #9A3E35';
+        ctx.lineWidth =
+            2;
 
-        wheel.style.borderRadius =
-        '50%';
+        ctx.stroke();
 
-        wheel.style.backgroundColor =
-        '#ffffff';
+        // text
+        ctx.save();
 
-        wheel.style.boxShadow =
-        '0 20px 40px rgba(0,0,0,.15)';
-
-    wheel.innerHTML='';
-
-    foods.forEach(
-    (food,index)=>{
-
-        const label =
-            document.createElement(
-                'div'
-            );
-
-        label.innerText =
-            food.name;
-
-        label.style.position =
-            'absolute';
-
-        label.style.left =
-            '50%';
-
-        label.style.top =
-            '50%';
-
-        label.style.transform =
-        `
-        rotate(
-        ${index*angle}deg
-        )
-        translateY(-200px)
-        rotate(90deg)
-        `;
-
-        label.style.color =
-            '#ffffff';
-
-        label.style.textShadow =
-            '0 2px 4px rgba(0,0,0,.25)';
-
-        label.style.fontWeight =
-            '700';
-
-        label.style.fontSize =
-            '13px';
-
-        wheel.appendChild(
-            label
+        ctx.translate(
+            wheelRadius,
+            wheelRadius
         );
+
+        ctx.rotate(
+            startAngle +
+            arcSize / 2
+        );
+
+        ctx.textAlign =
+            'center';
+
+        ctx.fillStyle =
+            '#fff';
+
+        ctx.font =
+            'bold 13px Arial';
+
+        ctx.fillText(
+            food,
+            wheelRadius / 1.55,
+            5
+        );
+
+        ctx.restore();
+
+        startAngle =
+            endAngle;
     });
+
+    // CENTER BUTTON
+    ctx.beginPath();
+
+    ctx.arc(
+        wheelRadius,
+        wheelRadius,
+        72,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fillStyle =
+        '#9A3E35';
+
+    ctx.fill();
+
+    ctx.fillStyle =
+        '#fff';
+
+    ctx.textAlign =
+        'center';
+
+    ctx.font =
+        'bold 24px Arial';
+
+    ctx.fillText(
+        'SPIN',
+        wheelRadius,
+        wheelRadius - 5
+    );
+
+    ctx.font =
+        '14px Arial';
+
+    ctx.fillText(
+        'klik untuk mulai',
+        wheelRadius,
+        wheelRadius + 20
+    );
 }
+
+// CLICK CENTER
+canvas.addEventListener(
+'click',
+function(e){
+
+    const rect =
+        canvas
+        .getBoundingClientRect();
+
+    const x =
+        e.clientX
+        - rect.left
+        - wheelRadius;
+
+    const y =
+        e.clientY
+        - rect.top
+        - wheelRadius;
+
+    const distance =
+        Math.sqrt(
+            x*x + y*y
+        );
+
+    if(distance <= 72){
+
+        spinWheel();
+    }
+});
 
 function spinWheel(){
 
-    const btn =
-        document.getElementById(
-            'spinBtn'
-        );
+    if(isSpinning)
+    return;
 
-    btn.disabled =
+    isSpinning =
         true;
 
-    const wheel =
-        document.getElementById(
-            'wheel'
-        );
+    spinSpeed =
+        Math.random()
+        * 8 + 24;
 
-    const selectedIndex =
-        Math.floor(
-            Math.random()
-            * foods.length
-        );
+    const spinDuration =
+        3200;
 
-    const angle =
-        360 /
-        foods.length;
+    const deceleration =
+        spinSpeed /
+        (spinDuration / 20);
 
-    const rotation =
-        3600 +
-        (
-            360 -
-            (
-                selectedIndex
-                * angle
-            )
-        );
+    const spinInterval =
+        setInterval(()=>{
 
-    currentRotation +=
-        rotation;
+        currentAngle +=
+            spinSpeed *
+            Math.PI /
+            180;
 
-    wheel.style.transform =
-        `
-        rotate(
-        ${currentRotation}deg
-        )
-        `;
+        spinSpeed -=
+            deceleration;
 
-    setTimeout(()=>{
+        if(
+            spinSpeed <= 0
+        ){
 
-        btn.disabled =
-            false;
+            clearInterval(
+                spinInterval
+            );
 
-        showResult(
-            foods[
-                selectedIndex
-            ]
-        );
+            isSpinning =
+                false;
 
-    },6000);
+            showResult();
+        }
+
+        drawWheel();
+
+    },20);
 }
 
-function showResult(
-    food
-){
+function showResult(){
+
+    const finalAngle =
+        currentAngle %
+        (2 * Math.PI);
+
+    const winningIndex =
+        Math.floor(
+        (
+            sections.length -
+            (
+                finalAngle /
+                (
+                    2 *
+                    Math.PI
+                ) *
+                sections.length
+            )
+        )
+        %
+        sections.length
+    );
+
+    const food =
+        foods[
+            winningIndex
+        ];
 
     confetti({
-        particleCount:200,
+        particleCount:180,
         spread:100
     });
 
@@ -437,12 +487,12 @@ function showResult(
         (food.tags || [])
         .map(tag => `
             <span class="
-                bg-[#EFEFEF]
-                text-gray-600
-                text-xs
-                px-3
-                py-1
-                rounded-full
+            bg-[#EFEFEF]
+            text-gray-600
+            text-xs
+            px-3
+            py-1
+            rounded-full
             ">
                 ${tag.name}
             </span>
@@ -451,18 +501,10 @@ function showResult(
 
     document
     .getElementById(
-        'popup'
-    )
-    .classList.remove(
-        'hidden'
-    );
-
-    document
-    .getElementById(
-        'popup'
+        'popupOverlay'
     )
     .classList.add(
-        'flex'
+        'show'
     );
 
     document
@@ -471,77 +513,114 @@ function showResult(
     )
     .innerHTML =
     `
-        <div class="
-            food-card
-            bg-white
-            rounded-[28px]
-            overflow-hidden
-            custom-shadow
-        ">
+    <div
+    style="
+    background:white;
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+    width:100%;
+    max-width:430px;
+    "
+    >
+
+        <!-- IMAGE -->
+        <div
+        style="
+        width:100%;
+        height:240px;
+        overflow:hidden;
+        "
+        >
 
             <img
-                src="/${food.image_url}"
-                class="
-                w-full
-                h-[280px]
-                object-cover
-                "
+            src="/${food.image_url}"
+            style="
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
+            "
             >
 
-            <div class="p-5">
+        </div>
 
-                <div class="
-                    flex
-                    justify-between
-                ">
+        <!-- CONTENT -->
+        <div
+        style="
+        padding:22px;
+        "
+        >
 
-                    <div>
+            <div
+            style="
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            "
+            >
 
-                        <h3 class="
-                            text-2xl
-                            font-bold
-                            text-gray-800
-                        ">
-                            ${food.name}
-                        </h3>
+                <!-- LEFT -->
+                <div>
 
-                        <div class="
-                            flex
-                            flex-wrap
-                            gap-2
-                            mt-3
-                        ">
-                            ${tags}
-                        </div>
+                    <h3
+                    style="
+                    margin:0;
+                    font-size:32px;
+                    font-weight:700;
+                    color:#1f2937;
+                    "
+                    >
+                        ${food.name}
+                    </h3>
 
+                    <div
+                    style="
+                    display:flex;
+                    flex-wrap:wrap;
+                    gap:10px;
+                    margin-top:18px;
+                    "
+                    >
+                        ${tags}
                     </div>
 
-                    <div class="
-                        text-center
-                    ">
+                </div>
 
-                        <i class="
-                            fa-regular
-                            fa-heart
-                            text-[#9A3E35]
-                            text-xl
-                        "></i>
+                <!-- RIGHT -->
+                <div
+                style="
+                text-align:center;
+                "
+                >
 
-                        <p class="
-                            text-sm
-                            text-gray-500
-                            mt-1
-                        ">
-                            ${food.likes_count ?? 0}
-                        </p>
+                    <i
+                    class="
+                    fa-regular fa-heart
+                    "
+                    style="
+                    color:#9A3E35;
+                    font-size:26px;
+                    "
+                    ></i>
 
-                    </div>
+                    <p
+                    style="
+                    margin-top:10px;
+                    color:#6B7280;
+                    font-size:16px;
+                    "
+                    >
+                        ${food.likes_count ?? 0}
+                    </p>
 
                 </div>
 
             </div>
 
         </div>
+
+    </div>
     `;
 }
 
@@ -549,18 +628,10 @@ function closePopup(){
 
     document
     .getElementById(
-        'popup'
+        'popupOverlay'
     )
     .classList.remove(
-        'flex'
-    );
-
-    document
-    .getElementById(
-        'popup'
-    )
-    .classList.add(
-        'hidden'
+        'show'
     );
 }
 

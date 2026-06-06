@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Api\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Models\Food;
 use Illuminate\Http\Request;
@@ -28,20 +27,43 @@ class AdminFoodController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'tags_ids' =>
+                json_decode(
+                    $request->tags_ids,
+                    true
+                )
+        ]);    
+
         $data = $request->validate([
             'name'          => 'required|string|max:255',
             'description'   => 'nullable|string',
-            'image_url'     => 'nullable|string',
-            'is_available'  => 'boolean',
+            'image'     => 'required|mimetypes:image/svg+xml|max:20048',
+            'is_available'  => 'nullable|boolean',
             'tags_ids'      => 'required|array|min:1',
             'tags_ids.*'    => 'exists:tags,id',
         ]);
 
+        $fileName =
+            time() . '_' .
+            $request
+            ->file('image')
+            ->getClientOriginalName();
+
+        $request
+            ->file('image')
+            ->move(
+                public_path(
+                    'image/makanan'
+                ),
+                $fileName
+            );
+
         $food = Food::create([
             'name'          => $data['name'],
-            'description'   => $data['description'] ?? null,
-            'image_url'     => $data['image_url'] ?? null,
-            'is_available'  => $data['is_available'] ?? true,
+            'description'   => '',
+            'image_url'     => 'image/makanan/' . $fileName,
+            'is_available'  => filter_var($request->is_available,FILTER_VALIDATE_BOOLEAN),
             'created_by'    => $request->user()->id,
         ]);
 

@@ -80,7 +80,11 @@
 
         .content{
             flex:1;
-            padding:20px;
+            width:100%;
+            max-width:1400px;
+            margin:0 auto;
+            padding:40px 20px;
+            box-sizing:border-box;
         }
 
         /* FOOTER */
