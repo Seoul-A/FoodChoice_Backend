@@ -2,18 +2,20 @@
 
 @section('content')
 
-
 <style>
+
     html,
     body{
         margin:0;
         padding:0;
         overflow-x:hidden;
     }
+
     body{
         font-family:Arial, sans-serif;
         background:#f4f4f4;
     }
+
     .title{
         font-size:28px;
         font-weight:bold;
@@ -29,10 +31,16 @@
 
     .box{
         background:white;
-        padding:18px;
-        border-radius:15px;
-        margin-bottom:18px;
-        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        padding:20px;
+        border-radius:18px;
+        margin-bottom:20px;
+        box-shadow:0 4px 15px rgba(0,0,0,0.08);
+        transition:0.3s;
+    }
+
+    .box:hover{
+        transform:translateY(-2px);
+        box-shadow:0 8px 18px rgba(0,0,0,0.12);
     }
 
     .box-title{
@@ -52,37 +60,58 @@
         cursor:pointer;
         margin:5px;
         transition:0.2s;
-        font-size:16px;
+        font-size:15px;
         font-weight:500;
+
+        box-shadow:
+        3px 3px 8px rgba(0,0,0,0.08),
+        -2px -2px 5px rgba(255,255,255,0.7);
     }
 
     .btn:hover{
-        transform:scale(1.08) translateY(-2px);
+        transform:scale(1.06) translateY(-2px);
         box-shadow:0 6px 15px rgba(0,0,0,0.15);
+    }
+
+    .btn:active{
+        transform:scale(0.92);
     }
 
     .active{
         background:#a31212;
         color:white;
+        box-shadow:0 4px 12px rgba(163,18,18,0.3);
     }
 
     .search-btn{
         width:100%;
-        padding:15px 28px;
+        padding:16px 28px;
         border:none;
-        border-radius:30px;
+        border-radius:35px;
         background:#a31212;
         color:white;
-        font-size:16px;
+        font-size:17px;
         font-weight:bold;
         cursor:pointer;
-        margin:20px auto 0;
-        box-shadow:0 4px 10px rgba(0,0,0,0.2);
+        margin:30px auto 0;
+
+        box-shadow:0 6px 15px rgba(163,18,18,0.25);
 
         display:flex;
         align-items:center;
         justify-content:center;
         gap:12px;
+
+        transition:0.25s;
+    }
+
+    .search-btn:hover{
+        background:#8d0f0f;
+        transform:translateY(-2px);
+    }
+
+    .search-btn:active{
+        transform:scale(0.96);
     }
 
     .search-btn-icon{
@@ -93,7 +122,6 @@
         position:relative;
         display:inline-block;
         box-sizing:border-box;
-        flex-shrink:0;
     }
 
     .search-btn-icon::after{
@@ -109,76 +137,91 @@
     }
 
     .result-title{
-        font-size:28px;
+        font-size:30px;
         font-weight:bold;
-        margin-top:60px;
-        margin-bottom: 30px;
+        margin-top:70px;
+        margin-bottom:30px;
     }
-
 
     .grid{
         display:grid;
         grid-template-columns:repeat(3,1fr);
-        gap:20px;
+        gap:25px;
     }
 
     .card{
         background:white;
-        border-radius:15px;
+        border-radius:20px;
         overflow:hidden;
-        box-shadow:0 2px 10px rgba(0,0,0,0.1);
+        box-shadow:0 4px 15px rgba(0,0,0,0.08);
+
+        transition:0.3s;
+
+        display:flex;
+        flex-direction:column;
+        height:100%;
+    }
+
+    .card:hover{
+        transform:translateY(-5px);
+        box-shadow:0 12px 25px rgba(0,0,0,0.15);
+    }
+
+    .card-image{
+        overflow:hidden;
     }
 
     .card img{
         width:100%;
-        height:300px;
+        height:250px;
         object-fit:cover;
+        transition:0.4s;
+    }
+
+    .card:hover img{
+        transform:scale(1.08);
     }
 
     .card-body{
-        padding:15px;
+        padding:18px;
+        display:flex;
+        flex-direction:column;
+        flex-grow:1;
     }
 
     .food-name{
-        font-size:22px;
+        font-size:24px;
         font-weight:bold;
-        margin-bottom:20px;
-        margin-top:15px;
+        margin-bottom:18px;
+        margin-top:5px;
+        color:#222;
     }
 
     .tag{
         display:inline-block;
-        padding:10px 16px;
+        padding:9px 14px;
         border-radius:20px;
-        font-size:16px;
-        margin-right:5px;
-        margin-bottom:5px;
+        font-size:14px;
+        margin-right:6px;
+        margin-bottom:8px;
         font-weight:500;
         box-shadow:0 3px 8px rgba(0,0,0,0.08);
     }
-
-    /* TIPE */
 
     .tag-tipe{
         background:#e5e5e5;
         color:#444;
     }
 
-    /* BAHAN */
-
-    .tag-bahan{
+    .tag-bahan_utama{
         background:#ffe8cc;
         color:#a35b00;
     }
-
-    /* JENIS */
 
     .tag-jenis{
         background:#d8f5d0;
         color:#3c7a2a;
     }
-
-    /* RASA */
 
     .tag-rasa{
         background:#ffd6d6;
@@ -189,58 +232,47 @@
         display:flex;
         justify-content:flex-end;
         align-items:center;
-        margin-top:15px;
-        gap:6px;
+        margin-top:auto;
+        padding-top:18px;
+        gap:8px;
     }
 
     .like-btn{
         border:none;
         background:none;
-        font-size:20px;
         cursor:pointer;
-    }
-    .heart{
-        width:18px;
-        height:18px;
-        border:3px solid #8B0000;
-        border-top:none;
-        border-left:none;
-        transform:rotate(45deg);
-        display:inline-block;
-        position:relative;
-        margin-top:5px;
+        transition:0.2s;
     }
 
-    .heart::before,
-    .heart::after{
-        content:'';
-        width:18px;
-        height:18px;
-        border:3px solid #8B0000;
-        border-radius:50%;
-        position:absolute;
+    .like-btn:hover{
+        transform:scale(1.15);
+    }
+
+    .empty-state{
         background:white;
+        padding:25px;
+        border-radius:18px;
+        grid-column:1 / -1;
+        text-align:center;
+        box-shadow:0 4px 12px rgba(0,0,0,0.08);
     }
 
-    .heart::before{
-        top:-12px;
-        left:0;
+    @media(max-width:1100px){
+
+        .grid{
+            grid-template-columns:repeat(2,1fr);
+        }
     }
 
-    .heart::after{
-        left:-12px;
-        top:0;
-    }
+    @media(max-width:700px){
 
-    /* FILLED */
+        .grid{
+            grid-template-columns:1fr;
+        }
 
-    .filled{
-        background:#8B0000;
-    }
-
-    .filled::before,
-    .filled::after{
-        background:#8B0000;
+        .food-name{
+            font-size:20px;
+        }
     }
 
 </style>
@@ -254,14 +286,13 @@
 </div>
 
 <!-- TIPE -->
-
 <div class="box">
 
     <div class="box-title">
         🥄 Tipe
     </div>
 
-    <button class="btn active" onclick="toggle(this,'tipe')">
+    <button class="btn" onclick="toggle(this,'tipe')">
         Makanan Berat
     </button>
 
@@ -272,7 +303,6 @@
 </div>
 
 <!-- JENIS -->
-
 <div class="box">
 
     <div class="box-title">
@@ -298,14 +328,13 @@
 </div>
 
 <!-- RASA -->
-
 <div class="box">
 
     <div class="box-title">
         🌶️ Rasa
     </div>
 
-    <button class="btn active" onclick="toggle(this,'rasa')">
+    <button class="btn" onclick="toggle(this,'rasa')">
         Asin
     </button>
 
@@ -320,101 +349,43 @@
 </div>
 
 <!-- BAHAN -->
-
 <div class="box">
 
     <div class="box-title">
         🍗 Bahan Utama
     </div>
 
-    <button class="btn" onclick="toggle(this,'bahan')">
-        Nasi
-    </button>
-
-    <button class="btn" onclick="toggle(this,'bahan')">
-        Mi
-    </button>
-
-    <button class="btn" onclick="toggle(this,'bahan')">
-        Sapi
-    </button>
-
-    <button class="btn" onclick="toggle(this,'bahan')">
-        Sayur
-    </button>
-
-    <button class="btn" onclick="toggle(this,'bahan')">
-        Seafood
-    </button>
-
-    <button class="btn" onclick="toggle(this,'bahan')">
-        Kambing
-    </button>
-
-    <button class="btn" onclick="toggle(this,'bahan')">
-        Ikan
-    </button>
-
-    <button class="btn" onclick="toggle(this,'bahan')">
-        Lontong
-    </button>
+    <button class="btn" onclick="toggle(this,'bahan')">Nasi</button>
+    <button class="btn" onclick="toggle(this,'bahan')">Mi</button>
+    <button class="btn" onclick="toggle(this,'bahan')">Sapi</button>
+    <button class="btn" onclick="toggle(this,'bahan')">Ayam</button>
+    <button class="btn" onclick="toggle(this,'bahan')">Sayur</button>
+    <button class="btn" onclick="toggle(this,'bahan')">Seafood</button>
+    <button class="btn" onclick="toggle(this,'bahan')">Kambing</button>
+    <button class="btn" onclick="toggle(this,'bahan')">Ikan</button>
+    <button class="btn" onclick="toggle(this,'bahan')">Lontong</button>
 
 </div>
 
 <!-- BUTTON -->
-
 <button class="search-btn" onclick="searchFood()">
+
     <span class="search-btn-icon"></span>
 
     Temukan Rekomendasi
+
 </button>
 
 <!-- RESULT -->
-
 <div class="result-title">
     Hasil Pencarian
 </div>
 
-<div id="result" class="grid" style="margin-top:20px;"></div>
+<div id="result" class="grid"></div>
 
 <script>
 
-const foods = [
-
-    {
-        id:1,
-        name:'Nasi Goreng',
-        image:'https://images.unsplash.com/photo-1603133872878-684f208fb84b?q=80&w=1000',
-        tipe:'Makanan Berat',
-        jenis:'Kering',
-        rasa:'Asin',
-        bahan:'Nasi',
-        like:0
-    },
-
-    {
-        id:2,
-        name:'Sate Ayam',
-        image:'https://images.unsplash.com/photo-1529563021893-cc83c992d75d?q=80&w=1000',
-        tipe:'Makanan Berat',
-        jenis:'Bakar',
-        rasa:'Manis',
-        bahan:'Ayam',
-        like:0
-    },
-
-    {
-        id:3,
-        name:'Mie Kuah',
-        image:'https://images.unsplash.com/photo-1617093727343-374698b1b08d?q=80&w=1000',
-        tipe:'Makanan Berat',
-        jenis:'Kuah',
-        rasa:'Asin',
-        bahan:'Mi',
-        like:0
-    }
-
-];
+let foods = [];
 
 let selections = {
     tipe: [],
@@ -424,6 +395,24 @@ let selections = {
 };
 
 let liked = {};
+
+async function loadFoods(){
+
+    try{
+
+        const response = await fetch(
+            'http://127.0.0.1:8000/api/foods'
+        );
+
+        foods = await response.json();
+
+        console.log(foods);
+
+    }catch(error){
+
+        console.log(error);
+    }
+}
 
 function toggle(el, category){
 
@@ -436,10 +425,9 @@ function toggle(el, category){
         selections[category] =
         selections[category].filter(v => v !== value);
 
-    } else {
+    }else{
 
         selections[category].push(value);
-
     }
 }
 
@@ -450,29 +438,63 @@ function toggleLike(id){
     searchFood();
 }
 
+// ⭐ DITAMBAH
+function hasTag(food, type, value){
+
+    return food.tags.some(tag =>
+
+        tag.type.toLowerCase() === type.toLowerCase()
+
+        &&
+
+        tag.name.toLowerCase() === value.toLowerCase()
+    );
+}
+
 function searchFood(){
 
-    let filtered = foods.filter(food => {
+    // ⭐ DIUBAH
+    let filtered = foods.data.filter(food => {
 
         return (
 
-            (selections.tipe.length === 0 ||
-            selections.tipe.includes(food.tipe))
+            (
+                selections.tipe.length === 0 ||
+
+                selections.tipe.some(value =>
+                    hasTag(food, 'tipe', value)
+                )
+            )
 
             &&
 
-            (selections.jenis.length === 0 ||
-            selections.jenis.includes(food.jenis))
+            (
+                selections.jenis.length === 0 ||
+
+                selections.jenis.some(value =>
+                    hasTag(food, 'jenis', value)
+                )
+            )
 
             &&
 
-            (selections.rasa.length === 0 ||
-            selections.rasa.includes(food.rasa))
+            (
+                selections.rasa.length === 0 ||
+
+                selections.rasa.some(value =>
+                    hasTag(food, 'rasa', value)
+                )
+            )
 
             &&
 
-            (selections.bahan.length === 0 ||
-            selections.bahan.includes(food.bahan))
+            (
+                selections.bahan.length === 0 ||
+
+                selections.bahan.some(value =>
+                    hasTag(food, 'bahan_utama', value)
+                )
+            )
 
         );
 
@@ -482,43 +504,31 @@ function searchFood(){
 
     if(filtered.length === 0){
 
-    html = `
+        html = `
 
-    <div style="
-        background:white;
-        padding:18px;
-        border-radius:15px;
-        margin-bottom:18px;
-        box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        <div class="empty-state">
 
+            <div style="
+                font-size:22px;
+                font-weight:bold;
+                margin-bottom:10px;
+                color:#333;
+            ">
+                Makanan Tidak Ditemukan
+            </div>
 
-        grid-column:1 / -1;
-        text-align:center;
-    ">
+            <div style="
+                font-size:15px;
+                color:gray;
+            ">
+                Coba ubah preferensi makanan kamu
+            </div>
 
-        <div style="
-            font-size:20px;
-            font-weight:bold;
-            margin-bottom:8px;
-            color:#333;
-            margin-top:10px;
-        ">
-            Makanan Tidak Ditemukan
         </div>
 
-        <div style="
-            font-size:14px;
-            color:gray;
-            margin-bottom:10px;
-        ">
-            Coba ubah preferensi makanan kamu
-        </div>
+        `;
 
-    </div>
-
-    `;
-
-    } else {
+    }else{
 
         filtered.forEach(food => {
 
@@ -528,7 +538,15 @@ function searchFood(){
 
             <div class="card">
 
-                <img src="${food.image}">
+                <div class="card-image">
+
+                    <!-- ⭐ DIUBAH -->
+                    <img
+                        src="http://127.0.0.1:8000${food.image_url}"
+                        alt="${food.name}"
+                    >
+
+                </div>
 
                 <div class="card-body">
 
@@ -538,29 +556,23 @@ function searchFood(){
 
                     <div>
 
-                        <span class="tag tag-tipe">
-                            ${food.tipe}
-                        </span>
+                        <!-- ⭐ DIUBAH -->
+                        ${food.tags.map(tag => `
 
-                        <span class="tag tag-bahan">
-                            ${food.bahan}
-                        </span>
+                            <span class="tag tag-${tag.type}">
+                                ${tag.name}
+                            </span>
 
-                        <span class="tag tag-jenis">
-                            ${food.jenis}
-                        </span>
-                        
-                        <span class="tag tag-rasa">
-                            ${food.rasa}
-                        </span>
-
+                        `).join('')}
 
                     </div>
 
                     <div class="like-area">
 
-                        <button class="like-btn"
-                        onclick="toggleLike(${food.id})">
+                        <button
+                            class="like-btn"
+                            onclick="toggleLike(${food.id})"
+                        >
 
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -571,17 +583,17 @@ function searchFood(){
                                 stroke="#8B0000"
                                 stroke-width="2.5"
                                 stroke-linecap="round"
-                                stroke-linejoin="round">
+                                stroke-linejoin="round"
+                            >
 
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-
-                                </path>
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
 
                             </svg>
+
                         </button>
 
                         <span>
-                            ${food.like + (isLiked ? 1 : 0)}
+                            ${food.likes_count + (isLiked ? 1 : 0)}
                         </span>
 
                     </div>
@@ -591,15 +603,20 @@ function searchFood(){
             </div>
 
             `;
-
         });
-
     }
 
     document.getElementById('result').innerHTML = html;
 }
 
-searchFood();
+async function init(){
+
+    await loadFoods();
+
+    searchFood();
+}
+
+init();
 
 </script>
 
