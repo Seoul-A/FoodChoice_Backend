@@ -11,7 +11,7 @@ class FoodController extends Controller
     public function index(Request $request)
     {
         $query = Food::available()->with('tags');
-
+        // Filter by tags
         if ($request->filled('tag_ids')) {
             $tagIds = explode(',', $request->tag_ids);
             $query->whereHas('tags', fn($q)  =>
@@ -19,6 +19,86 @@ class FoodController extends Controller
             );
         }
 
+        //filter by tipe makanan (makanan berat, makanan ringan, minuman)
+        if ($request->filled('tipe')) {
+            $query->whereHas(
+                'tags',
+                function ($q)
+                use ($request) {
+
+                    $q->where(
+                        'type',
+                        'tipe'
+                    )
+                    ->whereIn(
+                        'name',
+                        $request->tipe
+                    );
+                }
+            );
+        }
+
+        //filter by jenis makanan (makanan favorit, makanan baru, makanan terpopuler)
+        if ($request->filled('jenis')) {
+
+            $query->whereHas(
+                'tags',
+                function ($q)
+                use ($request) {
+
+                    $q->where(
+                        'type',
+                        'jenis'
+                    )
+                    ->whereIn(
+                        'name',
+                        $request->jenis
+                    );
+                }
+            );
+        }
+
+        //filter by rasa makanan (pedas, manis, asin, asam)
+        if ($request->filled('rasa')) {
+
+            $query->whereHas(
+                'tags',
+                function ($q)
+                use ($request) {
+
+                    $q->where(
+                        'type',
+                        'rasa'
+                    )
+                    ->whereIn(
+                        'name',
+                        $request->rasa
+                    );
+                }
+            );
+        }
+        
+        //filter by bahan makanan (ayam, daging, sayur, buah)
+        if ($request->filled('bahan_utama')) {
+
+            $query->whereHas(
+                'tags',
+                function ($q)
+                use ($request) {
+
+                    $q->where(
+                        'type',
+                        'bahan_utama'
+                    )
+                    ->whereIn(
+                        'name',
+                        $request->bahan_utama
+                    );
+                }
+            );
+        }
+
+        // Search by name
         if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }

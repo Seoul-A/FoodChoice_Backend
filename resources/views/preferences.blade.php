@@ -136,6 +136,48 @@
         bottom:-3px;
     }
 
+    .reset-btn{
+
+        padding:16px 26px;
+
+        border:none;
+        border-radius:35px;
+
+        background:white;
+
+        font-size:16px;
+        font-weight:bold;
+
+        cursor:pointer;
+
+        box-shadow:
+        0 6px 15px rgba(
+            0,0,0,.08
+        );
+
+        transition:
+        .25s ease;
+    }
+
+    .reset-btn:hover{
+
+        transform:
+        translateY(-2px);
+
+        background:#f9f9f9;
+
+        box-shadow:
+        0 10px 20px rgba(
+            0,0,0,.12
+        );
+    }
+
+    .reset-btn:active{
+
+        transform:
+        scale(.96);
+    }
+
     .result-title{
         font-size:30px;
         font-weight:bold;
@@ -285,6 +327,34 @@
     Cari makanan sesuai selera kamu
 </div>
 
+<div
+style="
+margin-bottom:30px;
+"
+>
+
+    <input
+        type="text"
+        id="keyword"
+        placeholder="Cari makanan..."
+        style="
+        width:100%;
+        padding:18px 24px;
+        border:none;
+        border-radius:20px;
+        font-size:16px;
+        box-sizing:border-box;
+        outline:none;
+        background:white;
+        box-shadow:
+        0 4px 15px rgba(
+            0,0,0,.08
+        );
+        "
+    >
+
+</div>
+
 <!-- TIPE -->
 <div class="box">
 
@@ -367,14 +437,39 @@
 
 </div>
 
-<!-- BUTTON -->
-<button class="search-btn" onclick="searchFood()">
+<div
+style="
+display:flex;
+gap:14px;
+margin-top:30px;
+"
+>
 
-    <span class="search-btn-icon"></span>
+    <!-- SEARCH -->
+    <button
+    class="search-btn"
+    onclick="searchFood()"
+    style="
+    margin:0;
+    flex:1;
+    "
+    >
 
-    Temukan Rekomendasi
+        <span class="search-btn-icon"></span>
 
+        Temukan Rekomendasi
+
+    </button>
+
+    <!-- RESET -->
+    <button
+    onclick="resetFilter()"
+    class="reset-btn"
+>
+    Reset
 </button>
+
+</div>
 
 <!-- RESULT -->
 <div class="result-title">
@@ -383,167 +478,337 @@
 
 <div id="result" class="grid"></div>
 
+<div
+id="pagination"
+style="
+display:flex;
+justify-content:center;
+gap:10px;
+margin-top:35px;
+flex-wrap:wrap;
+"
+></div>
+
 <script>
 
+const token =
+    localStorage.getItem(
+        'token'
+    );
+
 let foods = [];
+
+let currentPage = 1;
 
 let selections = {
     tipe: [],
     jenis: [],
     rasa: [],
-    bahan: []
+    bahan_utama: []
 };
 
 let liked = {};
 
-async function loadFoods(){
+/*
+=========================
+TOGGLE BUTTON
+=========================
+*/
+function toggle(
+    el,
+    category
+){
 
-    try{
+    const value =
+        el.innerText.trim();
 
-        const response = await fetch(
-            'http://127.0.0.1:8000/api/foods'
+    el.classList.toggle(
+        'active'
+    );
+
+    if(
+        selections[
+            category
+        ].includes(value)
+    ){
+
+        selections[
+            category
+        ] =
+        selections[
+            category
+        ].filter(
+            v => v !== value
         );
-
-        foods = await response.json();
-
-        console.log(foods);
-
-    }catch(error){
-
-        console.log(error);
-    }
-}
-
-function toggle(el, category){
-
-    const value = el.innerText;
-
-    el.classList.toggle('active');
-
-    if(selections[category].includes(value)){
-
-        selections[category] =
-        selections[category].filter(v => v !== value);
 
     }else{
 
-        selections[category].push(value);
+        selections[
+            category
+        ].push(value);
     }
 }
 
-function toggleLike(id){
+/*
+=========================
+LOAD FOODS
+=========================
+*/
+async function loadFoods(
+    page = 1
+){
 
-    liked[id] = !liked[id];
+    currentPage =
+        page;
 
-    searchFood();
-}
+    const keyword =
+        document
+        .getElementById(
+            'keyword'
+        )
+        ?.value || '';
 
-// ⭐ DITAMBAH
-function hasTag(food, type, value){
+    const params =
+        new URLSearchParams();
 
-    return food.tags.some(tag =>
-
-        tag.type.toLowerCase() === type.toLowerCase()
-
-        &&
-
-        tag.name.toLowerCase() === value.toLowerCase()
+    params.append(
+        'sort',
+        'popular'
     );
+
+    params.append(
+        'page',
+        page
+    );
+
+    if(keyword){
+
+        params.append(
+            'search',
+            keyword
+        );
+    }
+
+    /*
+    =====================
+    FILTER
+    =====================
+    */
+
+    selections.tipe
+    .forEach(item =>
+        params.append(
+            'tipe[]',
+            item
+        )
+    );
+
+    selections.jenis
+    .forEach(item =>
+        params.append(
+            'jenis[]',
+            item
+        )
+    );
+
+    selections.rasa
+    .forEach(item =>
+        params.append(
+            'rasa[]',
+            item
+        )
+    );
+
+    selections
+    .bahan_utama
+    .forEach(item =>
+        params.append(
+            'bahan_utama[]',
+            item
+        )
+    );
+
+    try{
+
+        const response =
+            await fetch(
+            `/api/foods?${params.toString()}`,
+        {
+            headers:{
+                Authorization:
+                    `Bearer ${token}`,
+                Accept:
+                    'application/json'
+            }
+        });
+
+        const data =
+            await response.json();
+
+        foods =
+            data.data;
+
+        renderFoods(
+            foods
+        );
+
+        renderPagination(
+            data
+        );
+
+    }catch(error){
+
+        console.log(
+            error
+        );
+    }
 }
 
+/*
+=========================
+SEARCH BUTTON
+=========================
+*/
 function searchFood(){
 
-    // ⭐ DIUBAH
-    let filtered = foods.data.filter(food => {
+    loadFoods(1);
+}
 
-        return (
+/*
+=====================
+RESET SELECTION
+=====================
+*/
+function resetFilter(){
+    selections = {
+        tipe: [],
+        jenis: [],
+        rasa: [],
+        bahan_utama: []
+    };
 
-            (
-                selections.tipe.length === 0 ||
+    /*
+    =====================
+    RESET BUTTON ACTIVE
+    =====================
+    */
 
-                selections.tipe.some(value =>
-                    hasTag(food, 'tipe', value)
-                )
-            )
+    document
+    .querySelectorAll(
+        '.btn.active'
+    )
+    .forEach(btn => {
 
-            &&
-
-            (
-                selections.jenis.length === 0 ||
-
-                selections.jenis.some(value =>
-                    hasTag(food, 'jenis', value)
-                )
-            )
-
-            &&
-
-            (
-                selections.rasa.length === 0 ||
-
-                selections.rasa.some(value =>
-                    hasTag(food, 'rasa', value)
-                )
-            )
-
-            &&
-
-            (
-                selections.bahan.length === 0 ||
-
-                selections.bahan.some(value =>
-                    hasTag(food, 'bahan_utama', value)
-                )
-            )
-
+        btn.classList.remove(
+            'active'
         );
 
     });
 
+    /*
+    =====================
+    RESET SEARCH
+    =====================
+    */
+
+    const keyword =
+        document
+        .getElementById(
+            'keyword'
+        );
+
+    if(keyword){
+
+        keyword.value =
+            '';
+    }
+
+    /*
+    =====================
+    LOAD DEFAULT
+    =====================
+    */
+
+    loadFoods(1);
+}
+
+/*
+=========================
+LIKE
+=========================
+*/
+function toggleLike(id){
+
+    liked[id] =
+        !liked[id];
+
+    renderFoods(
+        foods
+    );
+}
+
+/*
+=========================
+RENDER FOOD
+=========================
+*/
+function renderFoods(
+    foods
+){
+
+    const result =
+        document
+        .getElementById(
+            'result'
+        );
+
     let html = '';
 
-    if(filtered.length === 0){
+    if(
+        foods.length === 0
+    ){
 
         html = `
-
         <div class="empty-state">
 
             <div style="
                 font-size:22px;
                 font-weight:bold;
                 margin-bottom:10px;
-                color:#333;
             ">
                 Makanan Tidak Ditemukan
             </div>
 
-            <div style="
-                font-size:15px;
-                color:gray;
-            ">
-                Coba ubah preferensi makanan kamu
+            <div
+            style="
+            color:gray;
+            "
+            >
+                Coba keyword
+                atau filter lain
             </div>
 
         </div>
-
         `;
 
     }else{
 
-        filtered.forEach(food => {
+        foods.forEach(
+        food => {
 
-            const isLiked = liked[food.id];
+            const isLiked =
+                liked[
+                    food.id
+                ];
 
             html += `
-
             <div class="card">
 
                 <div class="card-image">
 
-                    <!-- ⭐ DIUBAH -->
                     <img
-                        src="http://127.0.0.1:8000${food.image_url}"
-                        alt="${food.name}"
+                    src="http://127.0.0.1:8000/${food.image_url}"
+                    alt="${food.name}"
                     >
 
                 </div>
@@ -556,44 +821,53 @@ function searchFood(){
 
                     <div>
 
-                        <!-- ⭐ DIUBAH -->
-                        ${food.tags.map(tag => `
+                        ${food.tags.map(
+                        tag => `
 
-                            <span class="tag tag-${tag.type}">
-                                ${tag.name}
-                            </span>
+                        <span
+                        class="
+                        tag
+                        tag-${tag.type}
+                        ">
+                            ${tag.name}
+                        </span>
 
-                        `).join('')}
+                        `
+                        ).join('')}
 
                     </div>
 
-                    <div class="like-area">
+                    <div class="
+                    like-area
+                    ">
 
                         <button
-                            class="like-btn"
-                            onclick="toggleLike(${food.id})"
+                        class="
+                        like-btn
+                        "
+                        onclick="
+                        toggleLike(
+                        ${food.id}
+                        )
+                        "
                         >
 
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="28"
-                                height="28"
-                                viewBox="0 0 24 24"
-                                fill="${isLiked ? '#8B0000' : 'none'}"
-                                stroke="#8B0000"
-                                stroke-width="2.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-
-                            </svg>
+                            ❤️
 
                         </button>
 
                         <span>
-                            ${food.likes_count + (isLiked ? 1 : 0)}
+
+                            ${
+                                food.likes_count
+                                +
+                                (
+                                    isLiked
+                                    ? 1
+                                    : 0
+                                )
+                            }
+
                         </span>
 
                     </div>
@@ -601,22 +875,68 @@ function searchFood(){
                 </div>
 
             </div>
-
             `;
         });
     }
 
-    document.getElementById('result').innerHTML = html;
+    result.innerHTML =
+        html;
 }
 
-async function init(){
+/*
+=========================
+PAGINATION
+=========================
+*/
+function renderPagination(
+    data
+){
 
-    await loadFoods();
+    let html = '';
 
-    searchFood();
+    for(
+        let i = 1;
+        i <= data.last_page;
+        i++
+    ){
+
+        html += `
+        <button
+        onclick="
+        loadFoods(
+        ${i}
+        )
+        "
+        class="
+        btn
+        ${
+            i ===
+            data.current_page
+
+            ? 'active'
+            : ''
+        }
+        "
+        >
+            ${i}
+        </button>
+        `;
+    }
+
+    document
+    .getElementById(
+        'pagination'
+    )
+    .innerHTML =
+        html;
 }
 
-init();
+/*
+=========================
+INIT
+=========================
+*/
+loadFoods();
 
 </script>
 
