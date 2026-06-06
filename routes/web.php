@@ -20,6 +20,15 @@ Route::get('/register', function () {
 
 Route::post('/register', [AuthController::class, 'register']);
 
+Route::get(
+    '/admin/dashboard',
+    function () {
+        return view(
+            'admin.admin-dashboard'
+        );
+    }
+);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 });

@@ -360,10 +360,26 @@ async function(e){
                 )
             );
 
-            // redirect dashboard
-            window.location.href =
-                '/dashboard';
+            // cek role
+            if(data.user.role === 'admin'){
 
+                window.location.href =
+                    '/admin/dashboard';
+
+            }else{
+
+                // user baru onboarding
+                if(!data.is_onboarded){
+
+                    window.location.href =
+                        '/onboarding';
+
+                }else{
+
+                    window.location.href =
+                        '/dashboard';
+                }
+            }
         }else{
 
             // error validasi laravel
