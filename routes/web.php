@@ -37,13 +37,16 @@ Route::get('/preferences', function () {
     return view('preferences');
 });
 
-Route::get('/admin/foods/create', function () {
-    return view('admin.food-create');
-});
-
 Route::view(
     '/admin/foods/create',
     'admin.food-create'
+);
+
+Route::get(
+    '/admin/foods/{id}/edit',
+    function ($id) {
+        return view('admin.food-edit');
+    }
 );
 
 Route::view(

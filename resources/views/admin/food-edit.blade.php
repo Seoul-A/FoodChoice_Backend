@@ -157,7 +157,7 @@
 
 <div class="food-form-container">
 <h2 class="page-title">
-    Tambah Data Makanan
+    Edit Data Makanan
 </h2>
 
 <div class="food-card">
@@ -299,7 +299,7 @@
                 type="submit"
                 class="save-btn"
             >
-                Tambah Makanan
+                Simpan Perubahan
             </button>
 
             <button
@@ -320,6 +320,10 @@
 <script>
 
 const token = localStorage.getItem('token');
+
+const foodId =
+    window.location.pathname
+    .split('/')[3];
 
 document.querySelectorAll('.tag-btn').forEach(btn => {
 
@@ -342,28 +346,81 @@ document
 
 });
 
-document
-.querySelector('.reset-btn')
-.addEventListener('click', function(){
+async function loadFood(){
 
-    setTimeout(() => {
+    try{
+
+        const response =
+            await fetch(
+                '/api/admin/foods/' + foodId,
+                {
+                    headers:{
+                        'Authorization':
+                            'Bearer ' + token,
+                        'Accept':
+                            'application/json'
+                    }
+                }
+            );
+
+        const food =
+            await response.json();
+
+        document
+        .getElementById('name')
+        .value = food.name;
+
+        if(food.image_url){
+
+            document
+            .getElementById('fileName')
+            .textContent =
+                food.image_url
+                .split('/')
+                .pop();
+
+        }
 
         document
         .querySelectorAll('.tag-btn')
         .forEach(btn => {
 
-            btn.classList.remove('active');
+            const tagName =
+                btn.innerText
+                .trim()
+                .toLowerCase();
+
+            const found =
+                food.tags.some(tag =>
+
+                    tag.name
+                    .toLowerCase()
+                    ===
+                    tagName
+
+                );
+
+            if(found){
+
+                btn.classList.add(
+                    'active'
+                );
+
+            }
 
         });
 
-        document.getElementById('fileName').textContent =
-            'Belum ada file yang dipilih';
+    }catch(error){
 
-        document.getElementById('image').value = '';
+        console.log(error);
 
-    }, 0);
+        alert(
+            'Gagal memuat data makanan'
+        );
 
-});
+    }
+
+}
 
 document
 .getElementById('foodForm')
@@ -377,16 +434,6 @@ document
         .value
         .trim();
 
-    if(name === ''){
-
-        alert(
-            'Nama makanan wajib diisi'
-        );
-
-        return;
-
-    }
-
     const selectedTags = [];
 
     document
@@ -398,16 +445,6 @@ document
         );
 
     });
-
-    if(selectedTags.length === 0){
-
-        alert(
-            'Pilih minimal 1 tag'
-        );
-
-        return;
-
-    }
 
     try{
 
@@ -424,8 +461,11 @@ document
                 }
             );
 
-        const tags =
+        const tagResponse =
             await tagsResponse.json();
+
+        const tags =
+            tagResponse.tags;
 
         const tags_ids =
             tags
@@ -445,9 +485,9 @@ document
 
         const response =
             await fetch(
-                '/api/admin/foods',
+                '/api/admin/foods/' + foodId,
                 {
-                    method:'POST',
+                    method:'PUT',
 
                     headers:{
                         'Content-Type':
@@ -463,9 +503,6 @@ document
                     body:JSON.stringify({
 
                         name:name,
-                        description:null,
-                        image_url:null,
-                        is_available:true,
                         tags_ids:tags_ids
 
                     })
@@ -479,7 +516,7 @@ document
         if(response.ok){
 
             alert(
-                'Makanan berhasil ditambahkan'
+                'Makanan berhasil diperbarui'
             );
 
             window.location.href =
@@ -489,7 +526,7 @@ document
 
             alert(
                 data.message ||
-                'Gagal menambahkan makanan'
+                'Gagal memperbarui makanan'
             );
 
         }
@@ -505,6 +542,8 @@ document
     }
 
 });
+
+loadFood();
 
 </script>
 
