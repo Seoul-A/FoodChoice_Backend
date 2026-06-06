@@ -55,6 +55,7 @@
             border-radius:12px;
             cursor:pointer;
             font-weight:600;
+            font-size:16px;
         }
 
         .logout-btn:hover{
@@ -99,12 +100,13 @@
 
         .search-icon{
             position:absolute;
-            left:16px;
+            left:18px;
             top:50%;
             transform:translateY(-50%);
             display:flex;
             align-items:center;
             justify-content:center;
+            pointer-events:none;
         }
 
         .search-input{
@@ -120,6 +122,10 @@
             transition:.2s;
         }
 
+        .search-input::placeholder{
+            color:#999;
+        }
+
         .search-input:focus{
             border-color:#8B0000;
             box-shadow:0 0 0 4px rgba(139,0,0,.08);
@@ -133,6 +139,7 @@
             border-radius:12px;
             cursor:pointer;
             font-weight:600;
+            font-size:16px;
         }
 
         .add-btn:hover{
@@ -173,7 +180,6 @@
             width:100%;
             height:250px;
             object-fit:cover;
-            display:block;
             transition:.4s;
         }
 
@@ -247,10 +253,9 @@
         }
 
         /* ACTION */
-
         .actions{
             display:flex;
-            align-items:center;
+            gap:16px;
             margin-top:auto;
             padding-top:18px;
             border-top:1px solid #eee;
@@ -259,31 +264,40 @@
         .edit-btn,
         .delete-btn{
             flex:1;
-            background:none;
+            height:48px;
             border:none;
-            padding:14px;
+            border-radius:10px;
             cursor:pointer;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+
             font-size:15px;
-            font-weight:500;
+            font-weight:600;
+
+            transition:.25s;
         }
 
         .edit-btn{
-            color:#2563eb;
+            background:#4f8df7;
+            color:white;
+        }
+
+        .edit-btn:hover{
+            background:#3d7df0;
+            transform:translateY(-2px);
         }
 
         .delete-btn{
-            color:#dc2626;
+            background:#ff3131;
+            color:white;
         }
 
-        .edit-btn:hover,
         .delete-btn:hover{
-            background:#fafafa;
-        }
-
-        .action-divider{
-            width:1px;
-            height:25px;
-            background:#e5e5e5;
+            background:#f11f1f;
+            transform:translateY(-2px);
         }
 
         /* EMPTY */
@@ -297,59 +311,156 @@
         }
 
         /* MODAL */
+        .modal{
+            background:white;
+            width:500px;
+            max-width:90%;
+            border-radius:28px;
+            overflow:hidden;
+            box-shadow:0 25px 60px rgba(0,0,0,.2);
+            animation:modalShow .25s ease;
+        }
+
+        .logout-modal{
+            background:white;
+            width:360px;
+            max-width:90%;
+            border-radius:18px;
+            padding:28px;
+            box-shadow:0 10px 30px rgba(0,0,0,.15);
+        }
+
+        .logout-title{
+            font-size:26px;
+            font-weight:700;
+            color:#222;
+            margin-bottom:12px;
+        }
+
+        .logout-text{
+            color:#666;
+            font-size:16px;
+            line-height:1.5;
+            margin-bottom:24px;
+        }
+
+        .logout-actions{
+            display:flex;
+            justify-content:flex-end;
+            gap:10px;
+        }
+
+        .logout-cancel{
+            border:none;
+            background:#f1f1f1;
+            color:#333;
+            padding:12px 22px;
+            border-radius:10px;
+            cursor:pointer;
+            font-size:15px;
+            font-weight:600;
+        }
+
+        .logout-confirm{
+            border:none;
+            background:#b31212;
+            color:white;
+            padding:12px 22px;
+            border-radius:10px;
+            cursor:pointer;
+            font-size:15px;
+            font-weight:600;
+        }
+
+        @keyframes modalShow{
+            from{
+                transform:translateY(20px) scale(.95);
+                opacity:0;
+            }
+            to{
+                transform:translateY(0) scale(1);
+                opacity:1;
+            }
+        }
+
+        .modal-header{
+            padding:28px 28px 18px;
+            text-align:center;
+        }
+
+        .modal-icon{
+            width:70px;
+            height:70px;
+            border-radius:50%;
+            background:#fde8e8;
+            margin:0 auto 16px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .modal-title{
+            font-size:24px;
+            font-weight:700;
+            color:#222;
+            margin-bottom:10px;
+        }
+
+        .modal-text{
+            font-size:16px;
+            color:#666;
+            line-height:1.5;
+        }
+
+        .modal-footer{
+            border-top:1px solid #eee;
+            padding:18px 24px;
+
+            display:flex;
+            justify-content:center;
+            gap:12px;
+        }
+
+        .btn-cancel{
+            min-width:100px;
+            height:46px;
+            border:none;
+            border-radius:12px;
+            background:#f2f2f2;
+            font-size:16px;
+            cursor:pointer;
+        }
+        .btn-cancel:hover{
+            background:#e6e6e6;
+        }
+
+        .btn-delete{
+            min-width:140px;
+            height:46px;
+            border:none;
+            border-radius:12px;
+            background:#ef2b2b;
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+        }
+
+        .btn-delete:hover{
+            background:#d81f1f;
+        }
 
         .modal-overlay{
             position:fixed;
             inset:0;
             background:rgba(0,0,0,.45);
+            backdrop-filter:blur(4px);
             display:none;
             justify-content:center;
             align-items:center;
             z-index:999;
         }
-
-        .modal{
-            background:white;
-            width:400px;
-            max-width:90%;
-            border-radius:20px;
-            padding:25px;
-        }
-
-        .modal-title{
-            font-size:22px;
-            font-weight:bold;
-            margin-bottom:10px;
-        }
-
-        .modal-text{
-            color:#666;
-            margin-bottom:25px;
-        }
-
-        .modal-actions{
-            display:flex;
-            gap:10px;
-            justify-content:flex-end;
-        }
-
-        .btn-cancel{
-            border:none;
-            background:#eee;
-            padding:12px 20px;
-            border-radius:10px;
-            cursor:pointer;
-        }
-
-        .btn-delete{
-            border:none;
-            background:#dc2626;
-            color:white;
-            padding:12px 20px;
-            border-radius:10px;
-            cursor:pointer;
-        }
-
         /* FOOTER */
 
         .footer{
@@ -433,7 +544,20 @@
             <div class="search-wrapper">
 
                 <span class="search-icon">
-                    🔍
+
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#999"
+                        stroke-width="2"
+                    >
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+
                 </span>
 
                 <input
@@ -461,27 +585,61 @@
         id="foodContainer"
         class="food-grid"
     ></div>
+    <div
+        id="pagination"
+        style="
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            margin-top:35px;
+            flex-wrap:wrap;
+        "
+    ></div>
 
 </div>
 <!-- MODAL HAPUS -->
 
-<div
-    id="deleteModal"
-    class="modal-overlay"
->
+<div id="deleteModal" class="modal-overlay">
 
     <div class="modal">
 
-        <div class="modal-title">
-            Hapus Makanan
+        <div class="modal-header">
+
+            <div class="modal-icon">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#ef2b2b"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6l-1 14H6L5 6"></path>
+                    <path d="M10 11v6"></path>
+                    <path d="M14 11v6"></path>
+                    <path d="M9 6V4h6v2"></path>
+                </svg>
+
+            </div>
+
+            <div class="modal-title">
+                Hapus Makanan
+            </div>
+
+            <div class="modal-text">
+                Apakah Anda yakin ingin menghapus menu ini?
+                <br>
+                Data yang sudah dihapus tidak dapat dikembalikan.
+            </div>
+
         </div>
 
-        <div class="modal-text">
-            Apakah Anda yakin ingin menghapus menu ini?
-            Data yang sudah dihapus tidak dapat dikembalikan.
-        </div>
-
-        <div class="modal-actions">
+        <div class="modal-footer">
 
             <button
                 class="btn-cancel"
@@ -495,6 +653,45 @@
                 onclick="confirmDelete()"
             >
                 Hapus
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- MODAL LOGOUT -->
+
+<div
+    id="logoutModal"
+    class="modal-overlay"
+    style="display:none;"
+>
+
+    <div class="logout-modal">
+
+        <div class="logout-title">
+            Logout
+        </div>
+
+        <div class="logout-text">
+            Apakah Anda yakin ingin keluar dari dashboard?
+        </div>
+
+        <div class="logout-actions">
+
+            <button
+                class="logout-cancel"
+                onclick="closeLogoutModal()"
+            >
+                Batal
+            </button>
+
+            <button
+                class="logout-confirm"
+                onclick="confirmLogout()"
+            >
+                Logout
             </button>
 
         </div>
@@ -518,23 +715,24 @@
 const token = localStorage.getItem('token');
 
 let foods = [];
-
 let deleteId = null;
+let currentPage = 1;
 
 /* LOAD FOODS */
 
-async function loadFoods(){
+async function loadFoods(page = 1){
+
+    currentPage = page;
 
     try{
 
         const response =
             await fetch(
-                '/api/admin/foods',
+                '/api/admin/foods?page=' + page,
                 {
                     headers:{
                         'Authorization':
                             'Bearer ' + token,
-
                         'Accept':
                             'application/json'
                     }
@@ -548,21 +746,12 @@ async function loadFoods(){
 
         renderFoods();
 
+        renderPagination(data);
+
     }catch(error){
 
         console.error(error);
 
-        document
-        .getElementById('foodContainer')
-        .innerHTML = `
-
-            <div class="empty-state">
-
-                Gagal memuat data makanan
-
-            </div>
-
-        `;
     }
 
 }
@@ -611,7 +800,7 @@ function renderFoods(){
                 <div class="food-image-wrapper">
 
                     <img
-                        src="/${encodeURI(food.image_url)}"
+                        src="http://127.0.0.1:8000/${food.image_url}"
                         class="food-image"
                         alt="${food.name}"
                     >
@@ -674,26 +863,19 @@ function renderFoods(){
 
                     <div class="actions">
 
+                       
                         <button
                             class="edit-btn"
                             onclick="editFood(${food.id})"
                         >
-
-                            ✏ Edit
-
+                            Edit
                         </button>
-
-                        <div
-                            class="action-divider"
-                        ></div>
 
                         <button
                             class="delete-btn"
                             onclick="openDeleteModal(${food.id})"
                         >
-
-                            🗑 Hapus
-
+                            Hapus
                         </button>
 
                     </div>
@@ -712,6 +894,52 @@ function renderFoods(){
     .getElementById('foodContainer')
     .innerHTML = html;
 
+}
+
+function renderPagination(data){
+
+    let html = '';
+
+    for(
+        let i = 1;
+        i <= data.last_page;
+        i++
+    ){
+
+        html += `
+
+        <button
+            onclick="loadFoods(${i})"
+            class="
+                ${i === data.current_page ? 'active-page' : ''}
+            "
+            style="
+                padding:10px 16px;
+                border:none;
+                border-radius:12px;
+                cursor:pointer;
+                font-weight:bold;
+                background:
+                    ${i === data.current_page
+                        ? '#8B0000'
+                        : '#ffffff'};
+                color:
+                    ${i === data.current_page
+                        ? '#fff'
+                        : '#333'};
+                box-shadow:
+                    0 4px 12px rgba(0,0,0,.08);
+            "
+        >
+            ${i}
+        </button>
+
+        `;
+    }
+
+    document
+        .getElementById('pagination')
+        .innerHTML = html;
 }
 
 /* EDIT */
@@ -810,33 +1038,30 @@ async function confirmDelete(){
 }
 
 /* LOGOUT */
-
 function logout(){
 
-    const result =
-        confirm(
-            'Yakin ingin logout?'
-        );
-
-    if(!result){
-
-        return;
-
-    }
-
-    localStorage.removeItem(
-        'token'
-    );
-
-    localStorage.removeItem(
-        'user'
-    );
-
-    window.location.href =
-        '/login';
+    document
+    .getElementById('logoutModal')
+    .style.display = 'flex';
 
 }
 
+function closeLogoutModal(){
+
+    document
+    .getElementById('logoutModal')
+    .style.display = 'none';
+
+}
+
+function confirmLogout(){
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    window.location.href = '/login';
+
+}
 /* INIT */
 
 loadFoods();

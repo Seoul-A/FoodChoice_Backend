@@ -41,7 +41,7 @@
     .form-input{
         width:95%;
         height:44px;
-        border:1px solid #d9d9d9;
+        border:2px solid #d9d9d9;
         border-radius:6px;
         padding:0 14px;
         outline:none;
@@ -61,7 +61,7 @@
     .tag-btn{
         min-width:100px;
         height:40px;
-        border:1px solid #d9d9d9;
+        border:2px solid #d9d9d9;
         background:white;
         border-radius:4px;
         cursor:pointer;
@@ -86,16 +86,21 @@
 
     .upload-btn{
         padding:10px 18px;
-        border:1px solid #d9d9d9;
+        border:2px solid #d9d9d9;
         color:#b31212;
         cursor:pointer;
         background:white;
         border-radius:4px 0 0 4px;
         font-size:16px;
+        transition:.2s;
+    }
+
+    .upload-btn:hover{
+        border-color:#b31212;
     }
 
     .upload-text{
-        border:1px solid #d9d9d9;
+        border:2px solid #d9d9d9;
         border-left:none;
         padding:10px 14px;
         flex:1;
@@ -128,11 +133,19 @@
 
     .reset-btn{
         background:white;
-        border:1px solid #d9d9d9;
+        border:2px solid #d9d9d9;
         padding:12px 24px;
         border-radius:4px;
         cursor:pointer;
         font-size:16px;
+        font-weight:bold;
+    }
+
+    .reset-btn:hover{
+        background:#fdf0f0;
+        border-color:#b31212;
+        color:#b31212;
+        transition:.2s;
     }
 
     @media(max-width:768px){
@@ -320,6 +333,7 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
 const token =
@@ -551,14 +565,23 @@ async function(e){
                 body: formData
             });
 
-        const data =
-            await response.json();
+        const text = await response.text();
+
+        const jsonStart = text.indexOf('{');
+
+        const data = JSON.parse(
+            text.substring(jsonStart)
+        );
 
         if(response.ok){
 
-            alert(
-                'Makanan berhasil ditambahkan'
-            );
+            await Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Makanan berhasil ditambahkan',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#b31212'
+            });
 
             document
             .getElementById(

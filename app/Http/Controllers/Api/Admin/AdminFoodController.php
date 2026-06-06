@@ -14,6 +14,20 @@ class AdminFoodController extends Controller
             ->latest()
             ->paginate(12);
 
+        $foods->getCollection()->transform(function ($food) {
+
+            if (
+                $food->image_url &&
+                !str_starts_with($food->image_url, 'image/')
+            ) {
+                $food->image_url =
+                    'image/makanan/' .
+                    $food->image_url;
+            }
+
+            return $food;
+        });
+
         return response()->json($foods);
     }
 
@@ -79,26 +93,54 @@ class AdminFoodController extends Controller
     {
         $food = Food::findOrFail($id);
 
-        $data = $request->validate([
-            'name'         => 'sometimes|string|max:255',
-            'description'  => 'nullable|string',
-            'image_url'    => 'nullable|string',
-            'is_available' => 'boolean',
-            'tags_ids'     => 'array',
-            'tags_ids.*'   => 'exists:tags,id',
+        $request->merge([
+            'tags_ids' => json_decode(
+                $request->tags_ids,
+                true
+            )
         ]);
 
-        $food->update(
-            Arr::except($data, ['tags_ids'])
-        );
+        $data = $request->validate([
+            'name'          => 'required|string|max:255',
+            'description'   => 'nullable|string',
+            'image'         => 'nullable|mimetypes:image/svg+xml|max:20048',
+            'is_available'  => 'nullable|boolean',
+            'tags_ids'      => 'required|array|min:1',
+            'tags_ids.*'    => 'exists:tags,id',
+        ]);
 
-        if(isset($data['tags_ids'])){
+        $updateData = [
+            'name' => $data['name'],
+            'description' => '',
+            'is_available' => true,
+        ];
 
-            $food->tags()->sync(
-                $data['tags_ids']
-            );
+        if ($request->hasFile('image')) {
 
+            $fileName =
+                time() . '_' .
+                $request
+                    ->file('image')
+                    ->getClientOriginalName();
+
+            $request
+                ->file('image')
+                ->move(
+                    public_path(
+                        'image/makanan'
+                    ),
+                    $fileName
+                );
+
+            $updateData['image_url'] =
+                'image/makanan/' . $fileName;
         }
+
+        $food->update($updateData);
+
+        $food->tags()->sync(
+            $data['tags_ids']
+        );
 
         return response()->json([
             'message' => 'Makanan berhasil diperbarui',

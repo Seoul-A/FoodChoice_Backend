@@ -25,14 +25,14 @@
 
     .form-row{
         display:grid;
-        grid-template-columns:140px 1fr;
+        grid-template-columns:160px 1fr;
         gap:20px;
         margin-bottom:22px;
         align-items:start;
     }
 
     .form-label{
-        font-weight:600;
+        font-weight:610;
         color:#222;
         line-height:1.4;
         font-size:18px;
@@ -41,7 +41,7 @@
     .form-input{
         width:95%;
         height:44px;
-        border:1px solid #d9d9d9;
+        border:2px solid #d9d9d9;
         border-radius:6px;
         padding:0 14px;
         outline:none;
@@ -61,7 +61,7 @@
     .tag-btn{
         min-width:100px;
         height:40px;
-        border:1px solid #d9d9d9;
+        border:2px solid #d9d9d9;
         background:white;
         border-radius:4px;
         cursor:pointer;
@@ -86,7 +86,7 @@
 
     .upload-btn{
         padding:10px 18px;
-        border:1px solid #d9d9d9;
+        border:2px solid #d9d9d9;
         color:#b31212;
         cursor:pointer;
         background:white;
@@ -94,8 +94,12 @@
         font-size:16px;
     }
 
+    .upload-btn:hover{
+        border-color:#b31212;
+    }
+    
     .upload-text{
-        border:1px solid #d9d9d9;
+        border:2px solid #d9d9d9;
         border-left:none;
         padding:10px 14px;
         flex:1;
@@ -128,11 +132,19 @@
 
     .reset-btn{
         background:white;
-        border:1px solid #d9d9d9;
+        border:2px solid #d9d9d9;
         padding:12px 24px;
         border-radius:4px;
         cursor:pointer;
         font-size:16px;
+        font-weight:bold;
+    }
+
+    .reset-btn:hover{
+        background:#fdf0f0;
+        border-color:#b31212;
+        color:#b31212;
+        transition:.2s;
     }
 
     @media(max-width:768px){
@@ -169,6 +181,9 @@
 
             <label class="form-label">
                 Nama Makanan
+                <span style="color:red;">
+                    *
+                </span>
             </label>
 
             <input
@@ -189,11 +204,11 @@
 
             <div class="button-group">
 
-                <button type="button" class="tag-btn">
+                <button type="button" class="tag-btn" data-id="1">
                     Makanan Berat
                 </button>
 
-                <button type="button" class="tag-btn">
+                <button type="button" class="tag-btn" data-id="2">
                     Camilan
                 </button>
 
@@ -210,10 +225,10 @@
 
             <div class="button-group">
 
-                <button type="button" class="tag-btn">Kuah</button>
-                <button type="button" class="tag-btn">Kering</button>
-                <button type="button" class="tag-btn">Nyemek</button>
-                <button type="button" class="tag-btn">Bakar</button>
+                <button type="button" class="tag-btn" data-id="3">Kuah</button>
+                <button type="button" class="tag-btn" data-id="4">Kering</button>
+                <button type="button" class="tag-btn" data-id="5">Nyemek</button>
+                <button type="button" class="tag-btn" data-id="6">Bakar</button>
 
             </div>
 
@@ -228,9 +243,9 @@
 
             <div class="button-group">
 
-                <button type="button" class="tag-btn">Asin</button>
-                <button type="button" class="tag-btn">Manis</button>
-                <button type="button" class="tag-btn">Pedas</button>
+                <button type="button" class="tag-btn" data-id="7">Pedas</button>
+                <button type="button" class="tag-btn" data-id="8">Manis</button>
+                <button type="button" class="tag-btn" data-id="9">Asin</button>
 
             </div>
 
@@ -245,15 +260,15 @@
 
             <div class="button-group">
 
-                <button type="button" class="tag-btn">Nasi</button>
-                <button type="button" class="tag-btn">Mi</button>
-                <button type="button" class="tag-btn">Sapi</button>
-                <button type="button" class="tag-btn">Ayam</button>
-                <button type="button" class="tag-btn">Sayur</button>
-                <button type="button" class="tag-btn">Seafood</button>
-                <button type="button" class="tag-btn">Kambing</button>
-                <button type="button" class="tag-btn">Ikan</button>
-                <button type="button" class="tag-btn">Lontong</button>
+                <button type="button" class="tag-btn" data-id="10">Nasi</button>
+                <button type="button" class="tag-btn" data-id="11">Mi</button>
+                <button type="button" class="tag-btn" data-id="12">Sayur</button>
+                <button type="button" class="tag-btn" data-id="13">Ikan</button>
+                <button type="button" class="tag-btn" data-id="14">Lontong</button>
+                <button type="button" class="tag-btn" data-id="15">Ayam</button>
+                <button type="button" class="tag-btn" data-id="16">Seafood</button>
+                <button type="button" class="tag-btn" data-id="17">Sapi</button>
+                <button type="button" class="tag-btn" data-id="18">Kambing</button>
 
             </div>
 
@@ -264,6 +279,7 @@
 
             <label class="form-label">
                 Gambar
+                <span style="color:red;">*</span>
             </label>
 
             <div class="upload-wrapper">
@@ -271,6 +287,7 @@
                 <input
                     type="file"
                     id="image"
+                    accept=".svg,image/svg+xml"
                     hidden
                 >
 
@@ -303,7 +320,7 @@
             </button>
 
             <button
-                type="reset"
+                type="button"
                 class="reset-btn"
             >
                 Reset
@@ -317,6 +334,7 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
 const token = localStorage.getItem('token');
@@ -324,6 +342,8 @@ const token = localStorage.getItem('token');
 const foodId =
     window.location.pathname
     .split('/')[3];
+
+let originalFood = null;
 
 document.querySelectorAll('.tag-btn').forEach(btn => {
 
@@ -365,6 +385,9 @@ async function loadFood(){
 
         const food =
             await response.json();
+        originalFood = food;
+        console.log(originalFood);
+        console.log(originalFood.tags);
 
         document
         .getElementById('name')
@@ -424,7 +447,9 @@ async function loadFood(){
 
 document
 .getElementById('foodForm')
-.addEventListener('submit', async function(e){
+.addEventListener(
+'submit',
+async function(e){
 
     e.preventDefault();
 
@@ -434,79 +459,74 @@ document
         .value
         .trim();
 
-    const selectedTags = [];
-
-    document
-    .querySelectorAll('.tag-btn.active')
-    .forEach(btn => {
-
-        selectedTags.push(
-            btn.innerText.trim()
+    const tags_ids =
+        Array.from(
+            document.querySelectorAll(
+                '.tag-btn.active'
+            )
+        ).map(btn =>
+            Number(
+                btn.dataset.id
+            )
         );
 
-    });
+    const formData =
+        new FormData();
+
+    formData.append(
+        '_method',
+        'PUT'
+    );
+
+    formData.append(
+        'name',
+        name
+    );
+
+    formData.append(
+        'description',
+        ''
+    );
+
+    formData.append(
+        'is_available',
+        '1'
+    );
+
+    formData.append(
+        'tags_ids',
+        JSON.stringify(tags_ids)
+    );
+
+    const image =
+        document.getElementById(
+            'image'
+        );
+
+    if(image.files.length){
+
+        formData.append(
+            'image',
+            image.files[0]
+        );
+    }
 
     try{
-
-        const tagsResponse =
-            await fetch(
-                '/api/tags',
-                {
-                    headers:{
-                        'Authorization':
-                            'Bearer ' + token,
-                        'Accept':
-                            'application/json'
-                    }
-                }
-            );
-
-        const tagResponse =
-            await tagsResponse.json();
-
-        const tags =
-            tagResponse.tags;
-
-        const tags_ids =
-            tags
-            .filter(tag =>
-
-                selectedTags.some(
-                    selected =>
-
-                        selected.toLowerCase()
-                        ===
-                        tag.name.toLowerCase()
-
-                )
-
-            )
-            .map(tag => tag.id);
 
         const response =
             await fetch(
                 '/api/admin/foods/' + foodId,
                 {
-                    method:'PUT',
+                    method:'POST',
 
                     headers:{
-                        'Content-Type':
-                            'application/json',
-
                         'Authorization':
-                            'Bearer ' + token,
-
+                            `Bearer ${token}`,
                         'Accept':
                             'application/json'
                     },
 
-                    body:JSON.stringify({
-
-                        name:name,
-                        tags_ids:tags_ids
-
-                    })
-
+                    body:formData
                 }
             );
 
@@ -515,9 +535,13 @@ document
 
         if(response.ok){
 
-            alert(
-                'Makanan berhasil diperbarui'
-            );
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Makanan berhasil diperbarui',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#b31212'
+                });
 
             window.location.href =
                 '/admin/dashboard';
@@ -533,16 +557,64 @@ document
 
     }catch(error){
 
-        console.log(error);
+        console.error(error);
 
         alert(
-            'Terjadi kesalahan'
+            'Terjadi kesalahan server'
         );
 
     }
 
 });
 
+document
+.querySelector('.reset-btn')
+.addEventListener('click', function(e){
+
+    e.preventDefault();
+
+    if(!originalFood) return;
+
+    // reset nama
+    document.getElementById('name').value =
+        originalFood.name;
+
+    // hapus semua active
+    document
+    .querySelectorAll('.tag-btn')
+    .forEach(btn => {
+
+        btn.classList.remove('active');
+
+    });
+
+    // aktifkan kembali tag sesuai data awal
+    originalFood.tags.forEach(tag => {
+
+        document
+        .querySelectorAll('.tag-btn')
+        .forEach(btn => {
+
+            if(
+                btn.textContent.trim().toLowerCase() ===
+                tag.name.trim().toLowerCase()
+            ){
+                btn.classList.add('active');
+            }
+
+        });
+
+    });
+
+    // reset file
+    document.getElementById('image').value = '';
+
+    document.getElementById('fileName').textContent =
+        originalFood.image_url
+        ? originalFood.image_url.split('/').pop()
+        : 'Belum ada file yang dipilih';
+
+});
 loadFood();
 
 </script>
