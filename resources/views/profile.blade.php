@@ -8,6 +8,13 @@
         display:flex;
         justify-content:center;
         padding:20px;
+
+        min-height:calc(100vh - 230px);
+        padding:20px;
+        box-sizing:border-box;
+    }
+    .content{
+        overflow:hidden;
     }
 
     .profile-card{
