@@ -21,8 +21,7 @@ Route::get('/register', function () {
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/dashboard', function () {
-    $foods = Food::all();
-    return view('dashboard', compact('foods'));
+    return view('dashboard');
 });
 
 Route::get('/preferences', function () {
@@ -36,6 +35,11 @@ Route::get('/admin/foods/create', function () {
 Route::view(
     '/admin/foods/create',
     'admin.food-create'
+);
+
+Route::view(
+    '/daftar-makanan',
+    'daftar-makanan'
 );
 
 Route::get('/profile', function () {
