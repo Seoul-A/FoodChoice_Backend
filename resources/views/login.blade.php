@@ -368,17 +368,9 @@ async function(e){
 
             }else{
 
-                // user baru onboarding
-                if(!data.is_onboarded){
-
-                    window.location.href =
-                        '/onboarding';
-
-                }else{
-
-                    window.location.href =
-                        '/dashboard';
-                }
+                window.location.href =
+                    '/dashboard';
+                
             }
         }else{
 

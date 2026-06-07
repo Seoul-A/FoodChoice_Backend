@@ -533,6 +533,56 @@ let selections = {
     bahan_utama: []
 };
 
+function toggle(
+    button,
+    type
+){
+
+    const value =
+        button
+        .innerText
+        .trim();
+
+    const key =
+        type === 'bahan'
+        ? 'bahan_utama'
+        : type;
+
+    button
+    .classList
+    .toggle(
+        'active'
+    );
+
+    if(
+        button
+        .classList
+        .contains(
+            'active'
+        )
+    ){
+
+        selections[
+            key
+        ].push(
+            value
+        );
+
+    }else{
+
+        selections[
+            key
+        ] =
+        selections[
+            key
+        ]
+        .filter(
+            item =>
+            item !==
+            value
+        );
+    }
+}
 
 /*
 =========================

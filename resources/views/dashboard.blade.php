@@ -57,6 +57,52 @@
             scale(1.08);
         }
 
+        .food-grid{
+            display:grid;
+            grid-template-columns:
+            repeat(3,1fr);
+            gap:40px;
+        }
+
+        /* desktop */
+        .food-grid
+        > div:last-child:nth-child(10){
+
+            grid-column:
+            2 / 3;
+        }
+
+        /* tablet */
+        @media(
+        max-width:1100px
+        ){
+
+            .food-grid{
+                grid-template-columns:
+                repeat(2,1fr);
+            }
+
+            /* reset supaya normal */
+            .food-grid
+            > div:last-child:nth-child(10){
+
+                grid-column:auto;
+                justify-self:stretch;
+                width:100%;
+            }
+        }
+
+        /* mobile */
+        @media(
+        max-width:700px
+        ){
+
+            .food-grid{
+                grid-template-columns:
+                1fr;
+            }
+        }
+
         .sidebar{
             transition:.3s ease;
         }
@@ -348,7 +394,7 @@
         <h2
             class="text-3xl font-bold text-[#9A3E35]"
         >
-            MENU TERATAS
+            10 MENU TERATAS
         </h2>
 
         <p
@@ -362,7 +408,7 @@
     <!-- GRID -->
     <div
         id="foodList"
-        class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10"
+        class="food-grid"
     >
 
         <div
@@ -373,11 +419,7 @@
 
     </div>
 
-    <!-- PAGINATION -->
-    <div
-        id="pagination"
-        class="flex justify-center gap-3 mt-14 flex-wrap"
-    ></div>
+    
 
 </section>
 
@@ -500,7 +542,6 @@ const token =
     );
 
 let foods = [];
-let currentPage = 1;
 
 function openSidebar(){
 
@@ -536,20 +577,18 @@ function closeSidebar(){
     );
 }
 
-async function fetchFoods(
-    page = 1
-){
+async function fetchFoods(){
 
     try{
 
         const response =
             await fetch(
-            `/api/foods?sort=popular&page=${page}`,
+            '/api/foods?sort=popular',
         {
             headers:{
-                'Authorization':
+                Authorization:
                     `Bearer ${token}`,
-                'Accept':
+                Accept:
                     'application/json'
             }
         });
@@ -557,22 +596,26 @@ async function fetchFoods(
         const data =
             await response.json();
 
-        console.log(data);
+        console.log(
+            data
+        );
 
         foods =
-            data.data.slice(0,10);
+            data.data
+            .slice(
+                0,
+                10
+            );
 
         renderFoods(
             foods
         );
 
-        renderPagination(
-            data
-        );
-
     }catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         document
         .getElementById(
@@ -660,11 +703,7 @@ function renderFoods(
     (food,index)=>{
 
         const rank =
-            (
-                (
-                    currentPage - 1
-                ) * 12
-            ) + index + 1;
+            index + 1;
 
         html += `
         <div
