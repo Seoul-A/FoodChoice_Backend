@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Like
     Route::post('/foods/{id}/like', [LikeController::class, 'toggle']);
+    Route::get('/history-like',[LikeController::class,'history']);
 
     // Recomendation
     Route::get('/recommendations', [RecommendationController::class, 'index']);
@@ -41,9 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/preferences', [PreferenceController::class, 'index']);
     Route::put('/preferences', [PreferenceController::class, 'update']);
 
-    Route::get(
-        '/spinner-foods',
-        [FoodController::class, 'spinnerFoods']);
+    Route::get('/spinner-foods',[FoodController::class, 'spinnerFoods']);
 
     // Admin Routes
     Route::middleware('admin')->prefix('admin')->group(function () {

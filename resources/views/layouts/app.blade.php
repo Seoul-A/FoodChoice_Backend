@@ -27,9 +27,11 @@
             justify-content:space-between;
             padding:0 22px;
             border-bottom:1px solid #ddd;
-            position:sticky;
+            position:fixed;
             top:0;
-            z-index:100;
+            left:0;
+            right:0;
+            z-index:9999;
         }
 
         .header-btn{
@@ -85,6 +87,7 @@
             margin:0 auto;
             padding:40px 20px;
             box-sizing:border-box;
+            padding: 130px 20px 30px;
         }
 
         /* FOOTER */
@@ -99,7 +102,7 @@
             margin-top:40px;
         }
 
-    </style>
+    </style>  
 </head>
 <body>
 
@@ -120,12 +123,17 @@
 
         <!-- LOGO -->
 
-        <div class="header-logo">
+        <a
+        href="{{ url('/dashboard') }}"
+        class="header-logo"
+        >
 
-            <img src="{{ asset('image/logo.svg') }}"
-            alt="Food Choice Logo">
+            <img
+            src="{{ asset('image/logo.svg') }}"
+            alt="Food Choice Logo"
+            >
 
-        </div>
+        </a>
 
         <!-- SEARCH -->
 

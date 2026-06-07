@@ -14,6 +14,22 @@ body{
     transition:.25s;
 }
 
+.spinner-food-card:hover{
+    transform:
+    translateY(-5px);
+
+    box-shadow:
+    0 12px 25px rgba(
+        0,0,0,0.15
+    );
+}
+
+.spinner-food-card:hover
+.spinner-food-img{
+    transform:
+    scale(1.08);
+}
+
 #wheelCanvas{
     display:block;
     margin:auto;
@@ -91,9 +107,10 @@ padding:30px 20px;
 
         <h1
         style="
-        font-size:24px;
-        font-weight:900;
-        margin:0;
+        font-size:28px;
+        font-weight:bold;
+        margin-top:0px;
+        margin-bottom:7px;
         text-transform:uppercase;
         "
         >
@@ -104,8 +121,8 @@ padding:30px 20px;
         <p
         style="
         color:#9A3E35;
-        font-size:15px;
-        margin-top:12px;
+        font-size:18px;
+        margin-bottom:7px;
         "
         >
             pakai spinner aja
@@ -202,13 +219,14 @@ let sections = [];
 let currentAngle = 0;
 let spinSpeed = 0;
 let isSpinning = false;
+let isHoveringSpin = false;
 
 const colors = [
-    '#C85555',
+    '#d67878',
     '#EAA624',
-    '#767B39',
-    '#AADCF2',
-    '#F7BCB0'
+    '#ccdb30',
+    '#73cff7',
+    '#fe9ef1'
 ];
 
 async function loadFoods(){
@@ -331,18 +349,25 @@ function drawWheel(){
     });
 
     // CENTER BUTTON
+    const centerRadius =
+        isHoveringSpin
+        ? 78
+        : 72;
+
     ctx.beginPath();
 
     ctx.arc(
         wheelRadius,
         wheelRadius,
-        72,
+        centerRadius,
         0,
         Math.PI * 2
     );
 
     ctx.fillStyle =
-        '#9A3E35';
+        isHoveringSpin
+        ? '#7F2F28'
+        : '#9A3E35';
 
     ctx.fill();
 
@@ -353,7 +378,9 @@ function drawWheel(){
         'center';
 
     ctx.font =
-        'bold 24px Arial';
+        isHoveringSpin
+        ? 'bold 26px Arial'
+        : 'bold 24px Arial';
 
     ctx.fillText(
         'SPIN',
@@ -369,9 +396,54 @@ function drawWheel(){
         wheelRadius,
         wheelRadius + 20
     );
+    
 }
 
 // CLICK CENTER
+
+canvas.addEventListener(
+'mousemove',
+function(e){
+
+    const rect =
+        canvas
+        .getBoundingClientRect();
+
+    const x =
+        e.clientX
+        - rect.left
+        - wheelRadius;
+
+    const y =
+        e.clientY
+        - rect.top
+        - wheelRadius;
+
+    const distance =
+        Math.sqrt(
+            x*x + y*y
+        );
+
+    const hovering =
+        distance <= 78;
+
+    if(
+        hovering !==
+        isHoveringSpin
+    ){
+
+        isHoveringSpin =
+            hovering;
+
+        canvas.style.cursor =
+            hovering
+            ? 'pointer'
+            : 'default';
+
+        drawWheel();
+    }
+});
+
 canvas.addEventListener(
 'click',
 function(e){
@@ -400,6 +472,7 @@ function(e){
         spinWheel();
     }
 });
+
 
 function spinWheel(){
 
@@ -450,7 +523,67 @@ function spinWheel(){
     },20);
 }
 
-function showResult(){
+async function toggleSpinnerLike(id){
+
+    try{
+
+        const response =
+            await fetch(
+            `/api/foods/${id}/like`,
+        {
+            method:'POST',
+
+            headers:{
+                Authorization:
+                    `Bearer ${token}`,
+                Accept:
+                    'application/json'
+            }
+        });
+
+        const data =
+            await response.json();
+
+        const foodIndex =
+            foods.findIndex(
+                food =>
+                food.id === id
+            );
+
+        if(
+            foodIndex !== -1
+        ){
+
+            foods[
+                foodIndex
+            ].is_liked =
+                data.is_liked;
+
+            foods[
+                foodIndex
+            ].likes_count =
+                data.likes_count;
+
+            showResult(
+                foods[
+                    foodIndex
+                ],
+                false
+            );
+        }
+
+    }catch(error){
+
+        console.log(
+            error
+        );
+    }
+}
+
+function showResult(
+    selectedFood = null,
+    showConfetti = true
+){
 
     const finalAngle =
         currentAngle %
@@ -474,30 +607,20 @@ function showResult(){
     );
 
     const food =
+        selectedFood ??
         foods[
             winningIndex
         ];
 
-    confetti({
-        particleCount:180,
-        spread:100
-    });
+    if(
+        showConfetti
+    ){
 
-    const tags =
-        (food.tags || [])
-        .map(tag => `
-            <span class="
-            bg-[#EFEFEF]
-            text-gray-600
-            text-xs
-            px-3
-            py-1
-            rounded-full
-            ">
-                ${tag.name}
-            </span>
-        `)
-        .join('');
+        confetti({
+            particleCount:180,
+            spread:100
+        });
+    }
 
     document
     .getElementById(
@@ -511,110 +634,183 @@ function showResult(){
     .getElementById(
         'resultCard'
     )
+
     .innerHTML =
     `
     <div
+    class="spinner-food-card"
     style="
-    background:white;
-    border-radius:28px;
-    overflow:hidden;
-    box-shadow:0 12px 30px rgba(0,0,0,.12);
-    width:100%;
-    max-width:430px;
+        background:white;
+        border-radius:28px;
+        overflow:hidden;
+        box-shadow:
+        0 12px 30px rgba(
+            0,0,0,.12
+        );
+        width:100%;
+        max-width:430px;
+        transition:.3s;
     "
     >
 
         <!-- IMAGE -->
         <div
         style="
-        width:100%;
-        height:240px;
+        position:relative;
         overflow:hidden;
         "
         >
 
             <img
             src="/${food.image_url}"
+            alt="${food.name}"
+            class="spinner-food-img"
             style="
             width:100%;
-            height:100%;
+            height:240px;
             object-fit:cover;
+            transition:.4s;
             display:block;
             "
             >
 
         </div>
 
-        <!-- CONTENT -->
+        <!-- BODY -->
         <div
         style="
-        padding:22px;
+        padding:18px;
+        display:flex;
+        flex-direction:column;
         "
         >
 
+            <!-- NAME -->
             <div
             style="
-            display:flex;
-            justify-content:space-between;
-            align-items:flex-start;
+            font-size:24px;
+            font-weight:bold;
+            margin-bottom:18px;
+            margin-top:5px;
+            color:#222;
+            "
+            >
+                ${food.name}
+            </div>
+
+            <!-- TAG -->
+            <div>
+
+                ${(food.tags || [])
+                .map(tag => `
+
+                <span
+                style="
+                    display:inline-block;
+                    padding:9px 12px;
+                    border-radius:20px;
+                    font-size:14px;
+                    margin-right:6px;
+                    margin-bottom:8px;
+                    font-weight:500;
+                    box-shadow:
+                    0 3px 8px rgba(
+                        0,0,0,.08
+                    );
+
+                    ${
+                        tag.type ===
+                        'tipe'
+                        ? `
+                        background:#e5e5e5;
+                        color:#444;
+                        `
+                        : ''
+                    }
+
+                    ${
+                        tag.type ===
+                        'jenis'
+                        ? `
+                        background:#d8f5d0;
+                        color:#3c7a2a;
+                        `
+                        : ''
+                    }
+
+                    ${
+                        tag.type ===
+                        'rasa'
+                        ? `
+                        background:#ffd6d6;
+                        color:#b30000;
+                        `
+                        : ''
+                    }
+
+                    ${
+                        tag.type ===
+                        'bahan_utama'
+                        ? `
+                        background:#ffe8cc;
+                        color:#a35b00;
+                        `
+                        : ''
+                    }
+                "
+                >
+                    ${tag.name}
+                </span>
+
+                `)
+                .join('')}
+
+            </div>
+
+            <!-- LIKE -->
+            <div
+            style="
+                display:flex;
+                justify-content:flex-end;
+                align-items:center;
+                margin-top:auto;
             "
             >
 
-                <!-- LEFT -->
-                <div>
-
-                    <h3
-                    style="
-                    margin:0;
-                    font-size:32px;
-                    font-weight:700;
-                    color:#1f2937;
-                    "
-                    >
-                        ${food.name}
-                    </h3>
-
-                    <div
-                    style="
-                    display:flex;
-                    flex-wrap:wrap;
-                    gap:10px;
-                    margin-top:18px;
-                    "
-                    >
-                        ${tags}
-                    </div>
-
-                </div>
-
-                <!-- RIGHT -->
-                <div
+                <button
+                onclick="
+                toggleSpinnerLike(
+                    ${food.id}
+                )
+                "
                 style="
-                text-align:center;
+                    font-size:28px;
+                    border:none;
+                    background:none;
+                    cursor:pointer;
+                    color:#8B0000;
+                    transition:.2s;
                 "
                 >
 
-                    <i
-                    class="
-                    fa-regular fa-heart
-                    "
-                    style="
-                    color:#9A3E35;
-                    font-size:26px;
-                    "
-                    ></i>
+                    ${
+                        food.is_liked
+                        ? '♥'
+                        : '♡'
+                    }
 
-                    <p
-                    style="
-                    margin-top:10px;
-                    color:#6B7280;
-                    font-size:16px;
-                    "
-                    >
-                        ${food.likes_count ?? 0}
-                    </p>
+                </button>
 
-                </div>
+                <span
+                style="
+                margin-left:6px;
+                "
+                >
+                    ${
+                        food.likes_count
+                        ?? 0
+                    }
+                </span>
 
             </div>
 

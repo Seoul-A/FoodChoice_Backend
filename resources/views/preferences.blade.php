@@ -2,6 +2,14 @@
 
 @section('content')
 
+<div
+style="
+max-width:1200px;
+margin:0 auto;
+padding:0;
+"
+>
+
 <style>
 
     html,
@@ -188,12 +196,12 @@
     .grid{
         display:grid;
         grid-template-columns:repeat(3,1fr);
-        gap:25px;
+        gap:30px;
     }
 
     .card{
         background:white;
-        border-radius:20px;
+        border-radius:28px;
         overflow:hidden;
         box-shadow:0 4px 15px rgba(0,0,0,0.08);
 
@@ -201,7 +209,7 @@
 
         display:flex;
         flex-direction:column;
-        height:100%;
+        min-height:100%;
     }
 
     .card:hover{
@@ -215,7 +223,7 @@
 
     .card img{
         width:100%;
-        height:250px;
+        height:240px;
         object-fit:cover;
         transition:0.4s;
     }
@@ -241,7 +249,7 @@
 
     .tag{
         display:inline-block;
-        padding:9px 14px;
+        padding:9px 12px;
         border-radius:20px;
         font-size:14px;
         margin-right:6px;
@@ -275,19 +283,37 @@
         justify-content:flex-end;
         align-items:center;
         margin-top:auto;
-        padding-top:18px;
-        gap:8px;
+        padding-top:1px;
+        gap:0px;
+        position: relative;
+        z-index: 999;
     }
 
     .like-btn{
-        border:none;
-        background:none;
-        cursor:pointer;
-        transition:0.2s;
-    }
+
+    position:relative;
+    z-index:999;
+
+    pointer-events:auto;
+
+    border:none;
+    background:none;
+    cursor:pointer;
+
+    transition:.2s;
+}
 
     .like-btn:hover{
-        transform:scale(1.15);
+
+        transform:
+        scale(1.1);
+
+        background:
+        #fff0f0;
+    }
+
+    .like-btn:hover i{
+        color:#b91c1c;
     }
 
     .empty-state{
@@ -507,48 +533,44 @@ let selections = {
     bahan_utama: []
 };
 
-let liked = {};
 
 /*
 =========================
 TOGGLE BUTTON
 =========================
 */
-function toggle(
-    el,
-    category
-){
+async function toggleLike(id){
+    console.log('klik', id);
 
-    const value =
-        el.innerText.trim();
+    try{
+        const response =
+            await fetch(
+            `/api/foods/${id}/like`,
+        {
+            method:'POST',
+            headers:{
+                Authorization:`Bearer ${token}`,
+                Accept:'application/json'
+            }
+        });
 
-    el.classList.toggle(
-        'active'
-    );
+        const data = await response.json();
 
-    if(
-        selections[
-            category
-        ].includes(value)
-    ){
+        foods = foods.map(food => {
+            if(food.id === id){
+                food.is_liked = data.is_liked;
+                food.likes_count = data.likes_count;
+            }
 
-        selections[
-            category
-        ] =
-        selections[
-            category
-        ].filter(
-            v => v !== value
-        );
+            return food;
+        });
 
-    }else{
+        renderFoods(foods);
 
-        selections[
-            category
-        ].push(value);
+    }catch(error){
+        console.log(error);
     }
 }
-
 /*
 =========================
 LOAD FOODS
@@ -734,21 +756,6 @@ function resetFilter(){
 
 /*
 =========================
-LIKE
-=========================
-*/
-function toggleLike(id){
-
-    liked[id] =
-        !liked[id];
-
-    renderFoods(
-        foods
-    );
-}
-
-/*
-=========================
 RENDER FOOD
 =========================
 */
@@ -797,9 +804,7 @@ function renderFoods(
         food => {
 
             const isLiked =
-                liked[
-                    food.id
-                ];
+                food.is_liked;
 
             html += `
             <div class="card">
@@ -842,32 +847,31 @@ function renderFoods(
                     ">
 
                         <button
-                        class="
-                        like-btn
-                        "
-                        onclick="
-                        toggleLike(
-                        ${food.id}
-                        )
-                        "
+                            class="like-btn"
+                            onclick="
+                            toggleLike(
+                            ${food.id}
+                            )
+                            "
+                            style="
+                            font-size:28px;
+                            border:none;
+                            background:none;
+                            cursor:pointer;
+                            color:#8B0000;
+                            "
                         >
 
-                            ❤️
+                            ${
+                                isLiked
+                                ? '♥'
+                                : '♡'
+                            }
 
                         </button>
 
                         <span>
-
-                            ${
-                                food.likes_count
-                                +
-                                (
-                                    isLiked
-                                    ? 1
-                                    : 0
-                                )
-                            }
-
+                            ${food.likes_count}
                         </span>
 
                     </div>
@@ -939,5 +943,6 @@ INIT
 loadFoods();
 
 </script>
+</div>
 
 @endsection

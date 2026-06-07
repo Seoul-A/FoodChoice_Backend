@@ -43,12 +43,18 @@
 
         .food-card:hover{
             transform:
-            translateY(-6px);
+            translateY(-5px);
 
             box-shadow:
-            0 16px 35px rgba(
-                0,0,0,.10
+            0 12px 25px rgba(
+                0,0,0,.15
             );
+        }
+        .food-card-pref:hover
+
+        .food-hover-img{
+            transform:
+            scale(1.08);
         }
 
         .sidebar{
@@ -105,7 +111,7 @@
         </a>
 
         <a
-            href="/daftar-makanan"
+            href="/preferences"
             class="
             flex items-center
             gap-4
@@ -119,27 +125,11 @@
         </a>
 
         <a
-            href="/preferences"
-            class="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-100"
-        >
-            <i class="fa-solid fa-sliders"></i>
-            Filter
-        </a>
-
-        <a
-            href="/search"
-            class="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-100"
-        >
-            <i class="fa-solid fa-magnifying-glass"></i>
-            Cari
-        </a>
-
-        <a
             href="/history-like"
             class="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-100"
         >
             <i class="fa-solid fa-heart"></i>
-            Riwayat Like
+            Riwayat Suka
         </a>
 
         <a
@@ -209,6 +199,7 @@
                 src="{{ asset('image/logo.svg') }}"
                 class="
                 h-[55px]
+                mt-[4px]
                 object-contain
                 cursor-pointer
                 "
@@ -298,7 +289,7 @@
                 Pilih preferensi seperti rasa,
                 bahan, dan jenis makanan
                 untuk mendapatkan <br>rekomendasi
-                makanan terbaik sesuai selera.
+                makanan terbaik sesuai selera kamu.
             </p>
 
             <!-- BUTTON -->
@@ -306,35 +297,37 @@
                 class="flex justify-center mt-10"
             >
 
-                <button
-                    onclick="openSearchPopup()"
+                <a
+                href="/preferences"
+                class="
+                bg-[#B3271A]
+                hover:bg-[#962116]
+                transition
+                rounded-full
+                px-8 py-4
+                flex items-center
+                gap-3
+                shadow-xl
+                text-white
+                text-[17px]
+                font-medium
+                hover:scale-105
+                w-fit
+                no-underline
+                "
+            >
+
+                <img
+                    src="{{ asset('image/logo2.png') }}"
                     class="
-                    bg-[#B3271A]
-                    hover:bg-[#962116]
-                    transition
-                    rounded-full
-                    px-8 py-4
-                    flex items-center
-                    gap-3
-                    shadow-xl
-                    text-white
-                    text-[17px]
-                    font-medium
-                    hover:scale-105
+                    w-7 h-7
+                    object-contain
                     "
                 >
 
-                    <img
-                        src="{{ asset('image/logo2.png') }}"
-                        class="
-                        w-7 h-7
-                        object-contain
-                        "
-                    >
+                klik untuk mulai mencari
 
-                    klik untuk mulai mencari
-
-                </button>
+</a>
 
             </div>
 
@@ -344,156 +337,6 @@
 
 </section>
 
-<!-- SEARCH POPUP -->
-<div
-    id="searchPopup"
-    class="
-    fixed inset-0
-    bg-black/50
-    hidden
-    justify-center
-    items-center
-    z-[999]
-    px-5
-    "
->
-
-    <div
-        class="
-        bg-[#F4F4F4]
-        rounded-[50px]
-        w-full
-        max-w-[650px]
-        py-14
-        px-8
-        relative
-        "
-    >
-
-        <!-- CLOSE -->
-        <button
-            onclick="closeSearchPopup()"
-            class="
-            absolute
-            top-5
-            right-8
-            text-4xl
-            text-gray-400
-            hover:text-black
-            "
-        >
-            ×
-        </button>
-
-        <!-- TITLE -->
-        <h2
-            class="
-            text-center
-            text-3xl
-            md:text-5xl
-            font-bold
-            mb-12
-            "
-        >
-            cari berdasarkan ?
-        </h2>
-
-        <!-- OPTION -->
-        <div
-            class="
-            flex
-            flex-col
-            md:flex-row
-            justify-center
-            gap-8
-            "
-        >
-
-            <!-- SEARCH -->
-            <a
-                href="/search"
-                class="
-                border
-                border-[#7A1D16]
-                rounded-[35px]
-                w-[180px]
-                h-[180px]
-                flex
-                flex-col
-                items-center
-                justify-center
-                hover:bg-white
-                transition
-                mx-auto
-                "
-            >
-
-                <i
-                    class="
-                    fa-solid
-                    fa-magnifying-glass
-                    text-[60px]
-                    text-[#65160F]
-                    "
-                ></i>
-
-                <p
-                    class="
-                    mt-5
-                    text-center
-                    text-gray-700
-                    "
-                >
-                    cari dengan kata kunci
-                </p>
-
-            </a>
-
-            <!-- FILTER -->
-            <a
-                href="/preferences"
-                class="
-                border
-                border-[#7A1D16]
-                rounded-[35px]
-                w-[180px]
-                h-[180px]
-                flex
-                flex-col
-                items-center
-                justify-center
-                hover:bg-white
-                transition
-                mx-auto
-                "
-            >
-
-                <i
-                    class="
-                    fa-solid
-                    fa-filter
-                    text-[60px]
-                    text-[#65160F]
-                    "
-                ></i>
-
-                <p
-                    class="
-                    mt-5
-                    text-center
-                    text-gray-700
-                    "
-                >
-                    cari dengan filter
-                </p>
-
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
 
 <!-- CONTENT -->
 <section
@@ -569,7 +412,7 @@
 
         <!-- BUTTON -->
         <a
-            href="/daftar-makanan"
+            href="/spinner"
             class="
             relative
             z-30
@@ -591,7 +434,7 @@
             font-medium
             "
         >
-            lihat daftar makanan
+            Putar Spinner
         </a>
 
     <img
@@ -656,6 +499,7 @@ const token =
         'token'
     );
 
+let foods = [];
 let currentPage = 1;
 
 function openSidebar(){
@@ -715,8 +559,15 @@ async function fetchFoods(
 
         console.log(data);
 
+        foods =
+            data.data.slice(0,10);
+
         renderFoods(
-            data.data.slice(0,10)
+            foods
+        );
+
+        renderPagination(
+            data
         );
 
     }catch(error){
@@ -740,6 +591,60 @@ async function fetchFoods(
     }
 }
 
+async function toggleLike(id){
+
+    try{
+
+        const response =
+            await fetch(
+            `/api/foods/${id}/like`,
+        {
+            method:'POST',
+
+            headers:{
+                Authorization:
+                    `Bearer ${token}`,
+                Accept:
+                    'application/json'
+            }
+        });
+
+        const data =
+            await response.json();
+
+        const foodIndex =
+            foods.findIndex(
+                food =>
+                food.id === id
+            );
+
+        if(
+            foodIndex !== -1
+        ){
+
+            foods[
+                foodIndex
+            ].is_liked =
+                data.is_liked;
+
+            foods[
+                foodIndex
+            ].likes_count =
+                data.likes_count;
+        }
+
+        renderFoods(
+            foods
+        );
+
+    }catch(error){
+
+        console.log(
+            error
+        );
+    }
+}
+
 function renderFoods(
     foods
 ){
@@ -749,83 +654,221 @@ function renderFoods(
             'foodList'
         );
 
-    container.innerHTML = '';
+    let html = '';
 
     foods.forEach(
     (food,index)=>{
 
         const rank =
-            ((currentPage-1)
-            *12)+index+1;
+            (
+                (
+                    currentPage - 1
+                ) * 12
+            ) + index + 1;
 
-        const tags =
-            (food.tags || [])
-            .map(tag => `
-                <span class="
-                    bg-[#EFEFEF]
-                    text-gray-600
-                    text-xs
-                    px-3
-                    py-1
-                    rounded-full
-                ">
-                    ${tag.name}
-                </span>
-            `)
-            .join('');
+        html += `
+        <div
+        class="food-card-pref"
+        style="
+        background:white;
+        border-radius:28px;
+        overflow:hidden;
+        box-shadow:0 4px 15px rgba(0,0,0,0.08);
+        transition:.3s;
+        display:flex;
+        flex-direction:column;
+        min-height:100%;
+        "
+        onmouseover="
+            this.style.transform='translateY(-5px)';
+            this.style.boxShadow='0 12px 25px rgba(0,0,0,0.15)';
+        "
+        onmouseout="
+            this.style.transform='translateY(0)';
+            this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)';
+        "
+        >
 
+            <div
+            class="food-image"
+            style="
+            position:relative;
+            overflow:hidden;
+            "
+            >
 
-        container.innerHTML += `
-            <div class="food-card bg-white rounded-[28px] overflow-hidden custom-shadow">
+                <img
+                    src="${food.image_url}"
+                    alt="${food.name}"
+                    class="food-hover-img"
+                    style="
+                    width:100%;
+                    height:240px;
+                    object-fit:cover;
+                    transition:.4s;
+                    "
+                >
 
-                <div class="relative">
+                <div
+                style="
+                    position:absolute;
+                    top:16px;
+                    left:16px;
+                    background:#8B0000;
+                    color:white;
+                    padding:10px 16px;
+                    border-radius:999px;
+                    font-weight:bold;
+                "
+                >
+                    #${rank}
+                </div>
 
-                    <img
-                        src="${food.image_url ?? 'https://via.placeholder.com/400'}"
-                        class="w-full h-[240px] object-cover"
+            </div>
+
+            <div
+            style="
+            padding:18px;
+            display:flex;
+            flex-direction:column;
+            flex-grow:1;
+            "
+            >
+
+                <div
+                style="
+                font-size:24px;
+                font-weight:bold;
+                margin-bottom:18px;
+                margin-top:5px;
+                color:#222;
+                "
+                >
+                    ${food.name}
+                </div>
+
+                <div>
+
+                    ${food.tags.map(
+                    tag => `
+
+                    <span
+                    style="
+                        display:inline-block;
+                        padding:9px 12px;
+                        border-radius:20px;
+                        font-size:14px;
+                        margin-right:6px;
+                        margin-bottom:8px;
+                        font-weight:500;
+                        box-shadow:
+                        0 3px 8px rgba(
+                            0,0,0,0.08
+                        );
+
+                        ${
+                            tag.type ===
+                            'tipe'
+                            ? `
+                            background:#e5e5e5;
+                            color:#444;
+                            `
+                            : ''
+                        }
+
+                        ${
+                            tag.type ===
+                            'jenis'
+                            ? `
+                            background:#d8f5d0;
+                            color:#3c7a2a;
+                            `
+                            : ''
+                        }
+
+                        ${
+                            tag.type ===
+                            'rasa'
+                            ? `
+                            background:#ffd6d6;
+                            color:#b30000;
+                            `
+                            : ''
+                        }
+
+                        ${
+                            tag.type ===
+                            'bahan_utama'
+                            ? `
+                            background:#ffe8cc;
+                            color:#a35b00;
+                            `
+                            : ''
+                        }
+                    "
                     >
+                        ${tag.name}
+                    </span>
 
-                    <div
-                        class="absolute top-4 left-4 bg-[#9A3E35] text-white px-4 py-2 rounded-full font-semibold"
-                    >
-                        #${rank}
-                    </div>
+                    `
+                    ).join('')}
 
                 </div>
 
-                <div class="p-5">
+                <div
+                style="
+                    display:flex;
+                    justify-content:flex-end;
+                    align-items:center;
+                    margin-top:auto;
+                "
+                >
 
-                    <div class="flex justify-between">
+                    <button
+                        onclick="
+                        toggleLike(
+                        ${food.id}
+                        )
+                        "
+                        style="
+                            font-size:28px;
+                            border:none;
+                            background:none;
+                            cursor:pointer;
+                            color:#8B0000;
+                            transition:.2s;
+                        "
+                    >
 
-                        <div>
+                        ${
+                            food.is_liked
+                            ? '♥'
+                            : '♡'
+                        }
 
-                            <h3 class="text-xl font-bold text-gray-800">
-                                ${food.name}
-                            </h3>
+                    </button>
 
-                            <div class="flex flex-wrap gap-2 mt-3">
-                                ${tags}
-                            </div>
-
-                        </div>
-
-                        <div class="text-center">
-
-                            <i class="fa-regular fa-heart text-[#9A3E35] text-xl"></i>
-
-                            <p class="text-sm text-gray-500 mt-1">
-                                ${food.likes_count ?? 0}
-                            </p>
-
-                        </div>
-
-                    </div>
+                    <span
+                    style="
+                    margin-left:6px;
+                    "
+                    >
+                        ${
+                            food.likes_count
+                            ?? 0
+                        }
+                    </span>
 
                 </div>
 
             </div>
+
+        </div>
         `;
     });
+
+    container.innerHTML =
+        html;
 }
 
 function renderPagination(
@@ -873,45 +916,6 @@ function changePage(
 }
 
 fetchFoods();
-
-function openSearchPopup(){
-
-    document
-    .getElementById(
-        'searchPopup'
-    )
-    .classList.remove(
-        'hidden'
-    );
-
-    document
-    .getElementById(
-        'searchPopup'
-    )
-    .classList.add(
-        'flex'
-    );
-}
-
-function closeSearchPopup(){
-
-    document
-    .getElementById(
-        'searchPopup'
-    )
-    .classList.remove(
-        'flex'
-    );
-
-    document
-    .getElementById(
-        'searchPopup'
-    )
-    .classList.add(
-        'hidden'
-    );
-}
-
 
 </script>
 
