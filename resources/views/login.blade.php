@@ -198,33 +198,6 @@
 
                     </div>
 
-                    <!-- OPTIONS -->
-                    <div
-                        class="flex items-center justify-between text-sm"
-                    >
-
-                        <label
-                            class="flex items-center gap-2 text-gray-500"
-                        >
-
-                            <input
-                                type="checkbox"
-                                class="accent-[#b15c4a]"
-                            >
-
-                            Ingat saya
-
-                        </label>
-
-                        <a
-                            href="#"
-                            class="text-[#b15c4a] font-medium hover:underline"
-                        >
-                            Lupa kata sandi?
-                        </a>
-
-                    </div>
-
                     <!-- BUTTON -->
                     <button
                         type="submit"
