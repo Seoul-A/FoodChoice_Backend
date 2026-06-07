@@ -135,7 +135,12 @@
                     ✉ {{ $user?->email ?? '-' }}
                 </div>
 
-                <a href="/login" class="logout-btn" style="text-decoration:none;">
+                <a
+                    href="#"
+                    class="logout-btn"
+                    style="text-decoration:none;"
+                    onclick="openLogoutModal()"
+                >
                     Logout
                 </a>
 
@@ -146,5 +151,119 @@
     </div>
 
 </div>
+<!-- MODAL LOGOUT -->
+
+<div
+    id="logoutModal"
+    style="
+        display:none;
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.45);
+        justify-content:center;
+        align-items:center;
+        z-index:999;
+    "
+>
+
+    <div
+        style="
+            background:white;
+            width:350px;
+            border-radius:18px;
+            padding:25px;
+            text-align:center;
+            box-shadow:0 10px 25px rgba(0,0,0,.15);
+        "
+    >
+
+        <h3
+            style="
+                margin-bottom:12px;
+                color:#222;
+            "
+        >
+            Logout
+        </h3>
+
+        <p
+            style="
+                color:#666;
+                margin-bottom:25px;
+            "
+        >
+            Apakah Anda yakin ingin keluar?
+        </p>
+
+        <div
+            style="
+                display:flex;
+                justify-content:center;
+                gap:10px;
+            "
+        >
+
+            <button
+                onclick="closeLogoutModal()"
+                style="
+                    padding:10px 20px;
+                    border:none;
+                    background:#e5e5e5;
+                    border-radius:10px;
+                    cursor:pointer;
+                    font-weight:600;
+                "
+            >
+                Batal
+            </button>
+
+            <button
+                onclick="logout()"
+                style="
+                    padding:10px 20px;
+                    border:none;
+                    background:#b30000;
+                    color:white;
+                    border-radius:10px;
+                    cursor:pointer;
+                    font-weight:600;
+                "
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+
+function openLogoutModal(){
+
+    document
+        .getElementById('logoutModal')
+        .style.display = 'flex';
+
+}
+
+function closeLogoutModal(){
+
+    document
+        .getElementById('logoutModal')
+        .style.display = 'none';
+
+}
+
+function logout(){
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
+    window.location.href = '/login';
+
+}
+
+</script>
 
 @endsection
